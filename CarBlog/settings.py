@@ -82,14 +82,7 @@ WSGI_APPLICATION = 'CarBlog.wsgi.application'
 # config/settings.py
 
 DATABASES = {
-    'default': {
-        'ENGINE': '',
-        'NAME': '',
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
+    'default': env.db(), 
 }
 
 
