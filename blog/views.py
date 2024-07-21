@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 from .models import Post
 from .forms import PostForm
 
@@ -9,6 +10,8 @@ def home(request):
     posts = Post.objects.filter(approved=True)
     return render(request, 'home.html', {'posts': posts})
 
+
+@login_required
 def new_post(request):
     if request.method == 'POST':
         form = PostForm(request.POST)
