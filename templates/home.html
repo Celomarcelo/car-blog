@@ -1,0 +1,30 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<div class="jumbotron">
+    <h1 class="display-4">Welcome to Car Blog!</h1>
+    <p class="lead">This is a simple blog where you can share and read posts about cars.</p>
+    <hr class="my-4">
+    <p>Explore the latest posts below or create your own!</p>
+    <a class="btn btn-primary btn-lg" href="{% url 'post_create' %}" role="button">Create New Post</a>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <h2>Latest Posts</h2>
+        {% for post in posts %}
+        {% if post.approved %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">{{ post.title }}</h5>
+                <p class="card-text">{{ post.content|truncatewords:30 }}</p>
+                <p class="card-text"><small class="text-muted">By {{ post.author.username }} on {{ post.created_at
+                        }}</small></p>
+                <a href="" class="btn btn-primary">Read More</a>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
