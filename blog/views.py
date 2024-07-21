@@ -2,11 +2,25 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login
 from .models import Post
+from .forms import PostForm
+
 
 def home(request):
-    posts = Post.objects.filter(approved=True) 
+    posts = Post.objects.filter(approved=True)
     return render(request, 'home.html', {'posts': posts})
 
+def new_post(request):
+    if request.method == 'POST':
+        form = PostForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.save()
+            return redirect('home')  
+    else:
+        form = PostForm()
+    
+    return render(request, 'blog/new_post.html', {'form': form})
 
 
 def register(request):
