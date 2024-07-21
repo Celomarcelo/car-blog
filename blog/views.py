@@ -1,6 +1,12 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login
+from .models import Post
+
+def home(request):
+    posts = Post.objects.filter(approved=True) 
+    return render(request, 'CarBlog/home.html', {'posts': posts})
+
 
 
 def register(request):
