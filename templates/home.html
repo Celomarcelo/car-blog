@@ -18,13 +18,22 @@
             <div class="card-body">
                 <h5 class="card-title">{{ post.title }}</h5>
                 <p class="card-text">{{ post.content|truncatewords:30 }}</p>
-                <p class="card-text"><small class="text-muted">By {{ post.author.username }} on {{ post.created_at
-                        }}</small></p>
+                <p class="card-text"><small class="text-muted">By {{ post.author.username }} on {{ post.created_at }}</small></p>
                 <a href="" class="btn btn-primary">Read More</a>
             </div>
         </div>
         {% endif %}
         {% endfor %}
+    </div>
+
+    <div class="col-md-4">
+        <h2>Categories</h2>
+        <ul class="list-group">
+            <li class="list-group-item">Sports Cars</li>
+            <li class="list-group-item">SUVs</li>
+            <li class="list-group-item">Electric Cars</li>
+            <li class="list-group-item">Classic Cars</li>
+        </ul>
     </div>
 </div>
 {% endblock %}
