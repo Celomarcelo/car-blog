@@ -5,7 +5,7 @@ from .models import Post
 
 def home(request):
     posts = Post.objects.filter(approved=True) 
-    return render(request, 'CarBlog/home.html', {'posts': posts})
+    return render(request, 'home.html', {'posts': posts})
 
 
 
