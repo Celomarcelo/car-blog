@@ -20,7 +20,7 @@ def new_post(request):
     else:
         form = PostForm()
     
-    return render(request, 'blog/new_post.html', {'form': form})
+    return render(request, 'new_post.html', {'form': form})
 
 
 def register(request):
