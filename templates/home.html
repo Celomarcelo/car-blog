@@ -18,6 +18,9 @@
         <div class="card mb-3">
             <div class="card-body">
                 <h5 class="card-title">{{ post.title }}</h5>
+                {% if post.image %}
+                <img src="{{ post.image.url }}" alt="{{ post.title }}" class="img-fluid">
+                {% endif %}
                 <p class="card-text">{{ post.content|truncatewords:30 }}</p>
                 <p class="card-text"><small class="text-muted">By {{ post.author.username }} on {{ post.created_at
                         }}</small></p>
