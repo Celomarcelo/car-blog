@@ -29,18 +29,18 @@
                 </ul>
                 <ul class="navbar-nav ml-auto">
                     {% if user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">{{ user.username }}</a>
+                    <li class="nav-item d-flex align-items-center mr-3">
+                        <span class="navbar-text">{{ user.username }}</span>
                     </li>
-                    <li class="nav-item">
-                        <form method="post" action="{% url 'logout' %}" class="form-inline">
+                    <li class="nav-item d-flex align-items-center">
+                        <form method="post" action="{% url 'logout' %}" class="form-inline mb-0">
                             {% csrf_token %}
                             <button type="submit" class="btn btn-link nav-link"
                                 style="padding: 0; border: none; background: none;">Logout</button>
                         </form>
                     </li>
                     {% else %}
-                    <li class="nav-item">
+                    <li class="nav-item d-flex align-items-center">
                         <a class="nav-link" href="{% url 'login' %}">Login</a>
                     </li>
                     {% endif %}
