@@ -1,9 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from .models import Post
 from .forms import PostForm
+from django.contrib.auth.models import User
 
 
 def home(request):
@@ -24,6 +25,12 @@ def new_post(request):
         form = PostForm()
     
     return render(request, 'new_post.html', {'form': form})
+
+@login_required
+def user_posts(request, username):
+    user = get_object_or_404(User, username=username)
+    posts = Post.objects.filter(author=user)
+    return render(request, 'user_posts.html', {'user': user, 'posts': posts})
 
 
 def register(request):
