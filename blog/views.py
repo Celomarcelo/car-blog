@@ -48,6 +48,15 @@ def post_edit(request, pk):
     return render(request, 'blog/post_edit.html', {'form': form})
 
 
+def post_delete(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    if request.method == 'POST':
+        post.delete()
+        return redirect('user_posts', username=post.author.username)
+    return render(request, 'blog/post_confirm_delete.html', {'post': post})
+
+
+
 def register(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
