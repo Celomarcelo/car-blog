@@ -1,6 +1,9 @@
 from django.urls import path
 from . import views
 from django.contrib.auth import views as auth_views
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 urlpatterns = [
     path('', views.home, name='home'), 
@@ -12,5 +15,5 @@ urlpatterns = [
     path('post/<int:post_id>/', views.post_detail, name='post_detail'),
     path('post/<int:post_id>/edit/', views.post_edit, name='post_edit'),
     path('post/<int:post_id>/delete/', views.post_delete, name='post_delete'),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
