@@ -22,8 +22,7 @@
                 <img src="{{ post.image.url }}" alt="{{ post.title }}" class="img-fluid">
                 {% endif %}
                 <p class="card-text">{{ post.content|truncatewords:30 }}</p>
-                <p class="card-text"><small class="text-muted">By {{ post.author.username }} on {{ post.created_at
-                        }}</small></p>
+                <p class="card-text"><small class="text-muted">By {{ post.author.username }}</small></p>
                 <a href="" class="btn btn-primary">Read More</a>
             </div>
         </div>
