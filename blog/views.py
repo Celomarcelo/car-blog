@@ -36,24 +36,24 @@ def post_detail(request, post_id):
     post = get_object_or_404(Post, id=post_id)
     return render(request, 'post_detail.html', {'post': post})
 
-def post_edit(request, pk):
-    post = get_object_or_404(Post, pk=pk)
+def post_edit(request, post_id):
+    post = get_object_or_404(Post, pk=post_id)
     if request.method == 'POST':
         form = PostForm(request.POST, instance=post)
         if form.is_valid():
             form.save()
-            return redirect('post_detail', pk=post.pk)
+            return redirect('post_detail', post_id=post.pk)
     else:
         form = PostForm(instance=post)
-    return render(request, 'blog/post_edit.html', {'form': form})
+    return render(request, 'post_edit.html', {'form': form, 'post': post})
 
 
-def post_delete(request, pk):
-    post = get_object_or_404(Post, pk=pk)
+def post_delete(request, post_id):
+    post = get_object_or_404(Post, pk=post_id)
     if request.method == 'POST':
         post.delete()
         return redirect('user_posts', username=post.author.username)
-    return render(request, 'blog/post_confirm_delete.html', {'post': post})
+    return render(request, 'post_confirm_delete.html', {'post': post})
 
 
 
