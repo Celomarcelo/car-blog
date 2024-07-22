@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="text-center">
+        <h1>Are you sure you want to delete "{{ post.title }}"?</h1>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Confirm Delete</button>
+        </form>
+        <a href="{% url 'post_detail' pk=post.pk %}" class="btn btn-secondary mt-3">Cancel</a>
+    </div>
+</div>
+{% endblock %}
