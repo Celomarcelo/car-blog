@@ -32,6 +32,10 @@ def user_posts(request, username):
     posts = Post.objects.filter(author=user)
     return render(request, 'user_posts.html', {'user': user, 'posts': posts})
 
+def post_detail(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    return render(request, 'post_detail.html', {'post': post})
+
 
 def register(request):
     if request.method == 'POST':
