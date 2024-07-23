@@ -14,6 +14,10 @@ from pathlib import Path
 import os
 from dotenv import load_dotenv
 import dj_database_url
+import cloudinary
+import cloudinary.api
+import cloudinary.uploader
+
 
 load_dotenv()
 
@@ -153,3 +157,11 @@ LOGOUT_REDIRECT_URL = 'logout'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+
+cloudinary.config(
+    cloudinary_url=os.getenv('CLOUDINARY_URL')
+)
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
