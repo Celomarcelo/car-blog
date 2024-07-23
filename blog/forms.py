@@ -13,7 +13,7 @@ class PostForm(forms.ModelForm):
         }
 
 
-class UserCreationForm(UserCreationForm):
+class CustomUserCreationForm(UserCreationForm):
     email = forms.EmailField(required=True)
 
     class Meta:
