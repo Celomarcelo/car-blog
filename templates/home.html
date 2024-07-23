@@ -39,10 +39,11 @@
     <div class="col-md-4">
         <h2>Categories</h2>
         <ul class="list-group">
-            <li class="list-group-item">Sports Cars</li>
-            <li class="list-group-item">SUVs</li>
-            <li class="list-group-item">Electric Cars</li>
-            <li class="list-group-item">Classic Cars</li>
+            {% for category in categories %}
+            <li class="list-group-item">
+                <a href="{% url 'category_filter' category.id %}">{{ category.name }}</a>
+            </li>
+            {% endfor %}
         </ul>
     </div>
 </div>

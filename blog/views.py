@@ -2,14 +2,21 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
-from .models import Post
+from .models import Post, Category
 from .forms import PostForm
 from django.contrib.auth.models import User
 
 
 def home(request):
     posts = Post.objects.filter(approved=True)
-    return render(request, 'home.html', {'posts': posts})
+    categories = Category.objects.all()
+    return render(request, 'home.html', {'posts': posts, 'categories': categories})
+
+def category_filter(request, category_id):
+    category = get_object_or_404(Category, id=category_id)
+    posts = Post.objects.filter(category=category, approved=True)
+    categories = Category.objects.all()
+    return render(request, 'category.html', {'posts': posts, 'categories': categories, 'selected_category': category})
 
 
 @login_required
