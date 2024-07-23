@@ -2,18 +2,18 @@
 
 {% block content %}
 <div class="d-flex justify-content-center align-items-center vh-100">
-    <div class="text-center">
+    <div class="text-center card">
         <h2>Register</h2>
         <form method="post" class="w-50 mx-auto">
             {% csrf_token %}
             <div class="form-group">
                 {{ form.non_field_errors }}
                 {% for field in form %}
-                <div class="mb-3">
+                <div class="mb-2">
                     {{ field.label_tag }}<br>
                     {{ field }}<br>
                     {{ field.help_text }}<br>
-                    {% if field.errors %}<br>
+                    {% if field.errors %}
                     <div class="alert alert-danger" role="alert">
                         {{ field.errors }}
                     </div>
