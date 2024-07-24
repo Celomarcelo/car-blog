@@ -2,18 +2,20 @@
 
 {% block content %}
 <div class="d-flex justify-content-center align-items-center vh-100">
-    <div class="text-center jumbotron">
+    <div class="text-center bg-light p-4 rounded shadow-sm w-100" style="max-width: 500px;">
         <h2>Register</h2>
-        <form method="post" class="w-50 mx-auto">
+        <!-- Form -->
+        <form method="post" class="w-100">
             {% csrf_token %}
             <div class="form-group">
                 {{ form.non_field_errors }}
                 {% for field in form %}
-                <div class="mb-2">
+                <div class="mb-3">
                     {{ field.label_tag }}<br>
                     {{ field }}<br>
                     {{ field.help_text }}<br>
                     {% if field.errors %}
+                    <!-- Display errors -->
                     <div class="alert alert-danger" role="alert">
                         {{ field.errors }}
                     </div>
@@ -21,7 +23,8 @@
                 </div>
                 {% endfor %}
             </div>
-            <button type="submit" class="btn btn-primary">Register</button>
+            <!-- submit button -->
+            <button type="submit" class="btn btn-primary mb-3">Register</button>
         </form>
     </div>
 </div>

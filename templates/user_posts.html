@@ -2,15 +2,17 @@
 
 {% block content %}
 <div class="d-flex justify-content-center align-items-center vh-100">
-    <div class="text-center card-body">
+    <div class="text-center bg-light p-4 rounded shadow-sm w-100" style="max-width: 800px;">
         <h1>{{ user.username }}'s Posts</h1>
+        <!-- List of posts -->
         <ul class="list-unstyled">
             {% for post in posts %}
-            <li>
-                <h2><a href="{% url 'post_detail' post.id %}">{{ post.title }}</a></h2>
+            <li class="mb-3">
+                <h2><a href="{% url 'post_detail' post.id %}" class="text-decoration-none">{{ post.title }}</a></h2>
                 <p>{{ post.content|slice:":200" }}...</p>
             </li>
             {% empty %}
+            <!-- Message and button if no posts are found -->
             <p>No posts found.</p>
             <a class="btn btn-primary btn-lg" href="{% url 'new_post' %}" role="button">Create New Post</a>
             {% endfor %}

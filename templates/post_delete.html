@@ -2,12 +2,13 @@
 
 {% block content %}
 <div class="d-flex justify-content-center align-items-center vh-100">
-    <div class="text-center">
+    <div class="text-center bg-light p-4 rounded shadow-sm w-100" style="max-width: 600px;">
         <h1>Edit Post</h1>
+        <!-- Form for editing the post -->
         <form method="post">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit" class="btn btn-primary">Save Changes</button>
+            <button type="submit" class="btn btn-primary mt-3">Save Changes</button>
         </form>
         <a href="{% url 'post_detail' post_id=post.id %}" class="btn btn-secondary mt-3">Cancel</a>
     </div>

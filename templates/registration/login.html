@@ -2,14 +2,18 @@
 
 {% block content %}
 <div class="d-flex justify-content-center align-items-center vh-100">
-  <div class="text-center">
+  <div class="text-center bg-light p-4 rounded shadow-sm w-100" style="max-width: 400px;">
+    <!-- Login form -->
     <h2>Login</h2>
     <form method="post">
       {% csrf_token %}
       {{ form.as_p }}
-      <button type="submit">Login</button>
-      <p>Forgot your password? <a href="{% url 'password_reset' %}">Reset it here</a>.</p>
+      <!-- Login button -->
+      <button type="submit" class="btn btn-primary mt-3">Login</button>
+      <!-- Link for password reset -->
+      <p class="mt-3">Forgot your password? <a href="{% url 'password_reset' %}">Reset it here</a>.</p>
     </form>
+    <!-- Alert for registration -->
     <div class="alert alert-warning mt-3" role="alert">
       Are you not registered yet? <a href="{% url 'register' %}" class="alert-link">Sign up here</a> to start
       posting and access more features.

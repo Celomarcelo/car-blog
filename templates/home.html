@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<!-- Main primary marketing message -->
 <div class="jumbotron">
     <h1 class="display-4">Welcome to Car Blog!</h1>
     <p class="lead">This is a simple blog where you can share and read posts about cars.</p>
@@ -9,7 +10,9 @@
     <a class="btn btn-primary btn-lg" href="{% url 'new_post' %}" role="button">Create New Post</a>
 </div>
 
+<!-- main content and sidebar -->
 <div class="row">
+    <!-- Main content area -->
     <div class="col-md-8">
         {% if user.is_authenticated %}
         <h2>Latest Posts</h2>
@@ -18,6 +21,7 @@
         <div class="card mb-3">
             <div class="card-body">
                 <h5 class="card-title">{{ post.title }}</h5>
+                <!-- Display image if available -->
                 {% if post.image %}
                 <img src="{{ post.image.url }}" alt="{{ post.title }}" class="img-fluid">
                 {% endif %}
@@ -29,6 +33,7 @@
         {% endif %}
         {% endfor %}
         {% else %}
+        <!-- Alert for users who are not logged in -->
         <div class="alert alert-warning" role="alert">
             You are not registered yet. <a href="{% url 'register' %}" class="alert-link">Sign up here</a> to start
             posting and access more features.
@@ -36,6 +41,7 @@
         {% endif %}
     </div>
 
+    <!-- Sidebar area -->
     <div class="col-md-4">
         <h2>Categories</h2>
         <ul class="list-group">

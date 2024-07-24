@@ -2,9 +2,10 @@
 
 {% block content %}
 <div class="d-flex justify-content-center align-items-center vh-100">
-    <div class="text-center">
+    <div class="text-center bg-light p-4 rounded shadow-sm w-100" style="max-width: 500px;">
         <h1>You have been logged out</h1>
         <p>Thank you for using our site. You have been successfully logged out.</p>
+        <!-- Login Again button -->
         <a href="{% url 'login' %}" class="btn btn-primary mt-3">Login Again</a>
     </div>
 </div>
