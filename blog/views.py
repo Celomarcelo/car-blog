@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
-from .models import Post, Category
-from .forms import PostForm, CustomUserCreationForm
+from .models import Post, Category, Comment
+from .forms import PostForm, CustomUserCreationForm, CommentForm
 from django.contrib.auth.models import User
 
 
@@ -39,10 +39,29 @@ def user_posts(request, username):
     posts = Post.objects.filter(author=user)
     return render(request, 'user_posts.html', {'user': user, 'posts': posts})
 
+@login_required
 def post_detail(request, post_id):
     post = get_object_or_404(Post, id=post_id)
-    return render(request, 'post_detail.html', {'post': post})
+    comments = post.comments.filter(approved=True)
 
+    if request.method == 'POST':
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
+            new_comment = comment_form.save(commit=False)
+            new_comment.post = post
+            new_comment.author = request.user
+            new_comment.save()
+            return redirect('post_detail', post_id=post.id)
+    else:
+        comment_form = CommentForm()
+
+    return render(request, 'your_app/post_detail.html', {
+        'post': post,
+        'comments': comments,
+        'comment_form': comment_form,
+    })
+
+@login_required
 def post_edit(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
     if request.method == 'POST':
@@ -54,7 +73,7 @@ def post_edit(request, post_id):
         form = PostForm(instance=post)
     return render(request, 'post_edit.html', {'form': form, 'post': post})
 
-
+@login_required
 def post_delete(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
     if request.method == 'POST':

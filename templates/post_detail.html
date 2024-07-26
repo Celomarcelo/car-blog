@@ -14,6 +14,32 @@
             <a href="{% url 'post_delete' post_id=post.id %}" class="btn btn-danger">Delete Post</a>
         </div>
         {% endif %}
+        <!-- Comments Section -->
+        <div class="mt-5">
+            <h2>Comments</h2>
+            {% for comment in comments %}
+            <div class="comment mb-3">
+                <p><strong>{{ comment.author }}</strong> on {{ comment.created_at|date:"F j, Y, g:i a" }}</p>
+                <p>{{ comment.content }}</p>
+            </div>
+            {% empty %}
+            <p>No comments yet. Be the first to comment!</p>
+            {% endfor %}
+        </div>
+
+        <!-- Comment Form -->
+        {% if user.is_authenticated %}
+        <div class="mt-5">
+            <h2>Leave a Comment</h2>
+            <form method="post" class="text-start">
+                {% csrf_token %}
+                {{ comment_form.as_p }}
+                <button type="submit" class="btn btn-success">Submit</button>
+            </form>
+        </div>
+        {% else %}
+        <p>You must be logged in to leave a comment.</p>
+        {% endif %}
     </div>
 </div>
 {% endblock %}
