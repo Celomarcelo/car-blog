@@ -39,7 +39,7 @@ def user_posts(request, username):
     posts = Post.objects.filter(author=user)
     return render(request, 'user_posts.html', {'user': user, 'posts': posts})
 
-
+@login_required
 def post_detail(request, post_id):
     post = get_object_or_404(Post, id=post_id)
     comments = post.comments.filter(approved=True)
@@ -55,13 +55,13 @@ def post_detail(request, post_id):
     else:
         comment_form = CommentForm()
 
-    return render(request, 'your_app/post_detail.html', {
+    return render(request, 'post_detail.html', {
         'post': post,
         'comments': comments,
         'comment_form': comment_form,
     })
 
-
+@login_required
 def post_edit(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
     if request.method == 'POST':
@@ -73,7 +73,7 @@ def post_edit(request, post_id):
         form = PostForm(instance=post)
     return render(request, 'post_edit.html', {'form': form, 'post': post})
 
-
+@login_required
 def post_delete(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
     if request.method == 'POST':
