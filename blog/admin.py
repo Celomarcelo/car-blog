@@ -16,7 +16,7 @@ class CategoryAdmin(admin.ModelAdmin):
 class CommentAdmin(admin.ModelAdmin):
     list_display = ('author', 'content', 'created_at', 'approved')
     list_filter = ('approved', 'created_at')
-    search_fields = ('author__username', 'text')
+    search_fields = ('author__username', 'content')
     actions = ['approve_comments']
 
     def approve_comments(self, request, queryset):
