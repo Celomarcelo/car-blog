@@ -86,21 +86,20 @@ WSGI_APPLICATION = 'CarBlog.wsgi.application'
 
 # config/settings.py
 
-#DATABASES = {
-    #'default': {
-        #'ENGINE': 'django.db.backends.postgresql',
-        #'NAME': os.getenv('DB_NAME'),
-        #'USER': os.getenv('DB_USER'),
-        #'PASSWORD': os.getenv('DB_PASSWORD'),
-        #'HOST': os.getenv('DB_HOST', 'localhost'),
-        #'PORT': os.getenv('DB_PORT', '5432'),
-    #}
-#}
+# DATABASES = {
+# 'default': {
+# 'ENGINE': 'django.db.backends.postgresql',
+# 'NAME': os.getenv('DB_NAME'),
+# 'USER': os.getenv('DB_USER'),
+# 'PASSWORD': os.getenv('DB_PASSWORD'),
+# 'HOST': os.getenv('DB_HOST', 'localhost'),
+# 'PORT': os.getenv('DB_PORT', '5432'),
+# }
+# }
 
 DATABASES = {
     'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
 }
-
 
 
 # Password validation
@@ -159,7 +158,6 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
-
 cloudinary.config(
     cloudinary_url=os.getenv('CLOUDINARY_URL')
 )
@@ -173,4 +171,3 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = 'webmaster@example.com'
-
