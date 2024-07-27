@@ -6,19 +6,20 @@ from .models import Post, Category, Comment
 from .forms import PostForm, CustomUserCreationForm, CommentForm
 from django.contrib.auth.models import User
 
-
+# View function for the home page
 def home(request):
     posts = Post.objects.filter(approved=True)
     categories = Category.objects.all()
     return render(request, 'home.html', {'posts': posts, 'categories': categories})
 
+# View function to filter posts by category
 def category_filter(request, category_id):
     category = get_object_or_404(Category, id=category_id)
     posts = Post.objects.filter(category=category, approved=True)
     categories = Category.objects.all()
     return render(request, 'category.html', {'posts': posts, 'categories': categories, 'selected_category': category})
 
-
+# View function to create a new post, accessible only to logged-in users
 @login_required
 def new_post(request):
     if request.method == 'POST':
@@ -33,12 +34,14 @@ def new_post(request):
     
     return render(request, 'new_post.html', {'form': form})
 
+# View function to display all posts by a specific user
 @login_required
 def user_posts(request, username):
     user = get_object_or_404(User, username=username)
     posts = Post.objects.filter(author=user)
     return render(request, 'user_posts.html', {'user': user, 'posts': posts})
 
+# View function to display the details of a specific post
 @login_required
 def post_detail(request, post_id):
     post = get_object_or_404(Post, id=post_id)
@@ -61,6 +64,7 @@ def post_detail(request, post_id):
         'comment_form': comment_form,
     })
 
+# View function to edit a specific post, accessible only to logged-in users
 @login_required
 def post_edit(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
@@ -73,6 +77,7 @@ def post_edit(request, post_id):
         form = PostForm(instance=post)
     return render(request, 'post_edit.html', {'form': form, 'post': post})
 
+# View function to delete a specific post, accessible only to logged-in users
 @login_required
 def post_delete(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
@@ -82,7 +87,7 @@ def post_delete(request, post_id):
     return render(request, 'post_confirm_delete.html', {'post': post})
 
 
-
+# View function to handle user registration
 def register(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)

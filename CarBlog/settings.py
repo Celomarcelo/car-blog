@@ -18,7 +18,7 @@ import cloudinary
 import cloudinary.api
 import cloudinary.uploader
 
-
+# Load environment variables from a .env file
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -86,17 +86,8 @@ WSGI_APPLICATION = 'CarBlog.wsgi.application'
 
 # config/settings.py
 
-# DATABASES = {
-# 'default': {
-# 'ENGINE': 'django.db.backends.postgresql',
-# 'NAME': os.getenv('DB_NAME'),
-# 'USER': os.getenv('DB_USER'),
-# 'PASSWORD': os.getenv('DB_PASSWORD'),
-# 'HOST': os.getenv('DB_HOST', 'localhost'),
-# 'PORT': os.getenv('DB_PORT', '5432'),
-# }
-# }
 
+# Use dj_database_url to configure the database from DATABASE_URL environment variable
 DATABASES = {
     'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
 }
@@ -148,22 +139,28 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
+# Authentication URLs
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'logout'
 
+# Static files storage with WhiteNoise
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Media files settings
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
+# Cloudinary configuration for media file storage
 cloudinary.config(
     cloudinary_url=os.getenv('CLOUDINARY_URL')
 )
 
+# Default storage for uploaded media files
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
+# Email configuration
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
