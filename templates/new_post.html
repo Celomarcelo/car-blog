@@ -2,16 +2,18 @@
 
 {% block content %}
 <div class="d-flex justify-content-center align-items-center vh-100">
-    <div class="text-center bg-light p-4 rounded shadow-sm w-100" style="max-width: 500px;">
+    <div class="text-center bg-light p-4 rounded shadow-sm w-100 responsive-container">
         <h2>Create a New Post</h2>
         <form method="post" enctype="multipart/form-data" class="w-100">
             {% csrf_token %}
-            {{ form.as_p }}
+            <div class="form-group">
+                {{ form.as_p }}
+            </div>
             <!-- Alert message for post review notice -->
             <div class="alert alert-warning mt-3" role="alert">
                 <p>Your post is subject to review by the site administrator</p>
             </div>
-            <button type="submit" class="btn btn-primary mt-3">Save</button>
+            <button type="submit" class="btn btn-primary mt-3 w-100">Save</button>
         </form>
     </div>
 </div>
