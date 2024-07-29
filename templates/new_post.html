@@ -2,12 +2,28 @@
 
 {% block content %}
 <div class="d-flex justify-content-center align-items-center vh-100">
-    <div class="text-center bg-light p-4 rounded shadow-sm w-100 responsive-container" style="width: 100%; max-width: 600px;">
+    <div class="text-center bg-light p-4 rounded shadow-sm w-100 responsive-container"
+        style="width: 100%; max-width: 600px;">
         <h2>Create a New Post</h2>
         <form method="post" class="w-100">
             {% csrf_token %}
-            <div class="form-group" style="width: 80%">
-                {{ form.as_p }}
+            <div class="form-group">
+                <div class="mb-3">
+                    <label for="id_title" class="form-label">Title</label>
+                    {{ form.title }}
+                </div>
+                <div class="mb-3 w-100">
+                    <label for="id_content" class="form-label">Content</label>
+                    {{ form.content }}
+                </div>
+                <div class="mb-3">
+                    <label for="id_image" class="form-label">Image</label>
+                    {{ form.image }}
+                </div>
+                <div class="mb-3">
+                    <label for="id_category" class="form-label">Category</label>
+                    {{ form.category }}
+                </div>
             </div>
             <!-- Alert message for post review notice -->
             <div class="alert alert-warning mt-3" role="alert">
