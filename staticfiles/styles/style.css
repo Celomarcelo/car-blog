@@ -27,23 +27,21 @@ body::before {
 }
 
 /* Media queries for responsive design */
-@media (max-width: 576px) {
-    .responsive-container {
-        max-width: 90%;
-        padding: 1rem;
-    }
-    .form-group {
-        width: 100%;
-    }
-    .form-control {
-        width: 100%;
-        box-sizing: border-box;
-    }
-    .btn {
-        width: 100%;
-        box-sizing: border-box;
-    }
-    h2 {
-        font-size: 1.5rem;
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"],
+.form-group textarea {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box; 
+}
+
+.text-center {
+    width: 100%;
+}
+
+@media (max-width: 600px) {
+    .bg-light {
+        padding: 1rem; 
     }
 }
