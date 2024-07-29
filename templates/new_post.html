@@ -6,7 +6,7 @@
         <h2>Create a New Post</h2>
         <form method="post" class="w-100">
             {% csrf_token %}
-            <div class="form-group w-100" style="width: auto">
+            <div class="form-group" style="width: 80%">
                 {{ form.as_p }}
             </div>
             <!-- Alert message for post review notice -->
