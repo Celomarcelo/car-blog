@@ -54,6 +54,11 @@ form select {
     margin-bottom: 1rem;  
 }
 
+form input[type="file"] {
+    width: auto; 
+    margin-bottom: 1rem;
+}
+
 .form-group {
     margin-bottom: 1rem;
 }
