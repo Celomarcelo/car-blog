@@ -27,17 +27,26 @@ body::before {
 }
 
 /* Media queries for responsive design */
-.form-group input[type="text"],
-.form-group input[type="email"],
-.form-group input[type="password"],
-.form-group textarea {
+form input[type="text"],
+form input[type="email"],
+form input[type="password"],
+form textarea,
+form select {
     width: 100%;
     max-width: 100%;
     box-sizing: border-box; 
 }
 
-.text-center {
+.form-group {
+    margin-bottom: 1rem;
+}
+
+button[type="submit"] {
     width: 100%;
+}
+
+.bg-light {
+    padding: 1rem;
 }
 
 @media (max-width: 600px) {
@@ -45,3 +54,4 @@ body::before {
         padding: 1rem; 
     }
 }
+
