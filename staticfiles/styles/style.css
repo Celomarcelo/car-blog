@@ -26,6 +26,21 @@ body::before {
     padding: 1rem 0;
 }
 
+.w-100 {
+    width: 100%;
+}
+
+.responsive-container {
+    max-width: 600px;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 1rem; 
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
 /* Media queries for responsive design */
 form input[type="text"],
 form input[type="email"],
