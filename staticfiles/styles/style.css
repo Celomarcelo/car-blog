@@ -31,7 +31,7 @@ body::before {
 }
 
 .responsive-container {
-    max-width: 600px;
+    max-width: 400px;
     width: 100%;
     box-sizing: border-box;
     padding: 1rem; 
@@ -49,7 +49,9 @@ form textarea,
 form select {
     width: 100%;
     max-width: 100%;
-    box-sizing: border-box; 
+    box-sizing: border-box;
+    padding: 0.5rem; 
+    margin-bottom: 1rem;  
 }
 
 .form-group {
@@ -64,8 +66,8 @@ button[type="submit"] {
     padding: 1rem;
 }
 
-@media (max-width: 600px) {
-    .bg-light {
+@media (max-width: 400px) {
+    .p-4 {
         padding: 1rem; 
     }
 }
