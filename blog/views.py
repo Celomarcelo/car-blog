@@ -5,8 +5,6 @@ from django.contrib.auth.decorators import login_required
 from .models import Post, Category
 from .forms import PostForm, CustomUserCreationForm, CommentForm, ProfileUpdateForm
 from django.contrib.auth.models import User
-from django.contrib.auth.views import PasswordChangeView
-from django.urls import reverse_lazy
 from django.contrib import messages
 
 # View function for the home page
