@@ -113,14 +113,14 @@ def profile(request):
             profile_form = ProfileUpdateForm(request.POST, instance=request.user)
             if profile_form.is_valid():
                 profile_form.save()
-                messages.success(request, 'Seu perfil foi atualizado com sucesso.')
+                messages.success(request, 'Your profile has been successfully updated.')
                 return redirect('profile')
         elif 'change_password' in request.POST:
             password_form = PasswordChangeForm(request.user, request.POST)
             if password_form.is_valid():
                 user = password_form.save()
                 update_session_auth_hash(request, user)  # Importante!
-                messages.success(request, 'Sua senha foi alterada com sucesso.')
+                messages.success(request, 'Your password has been successfully changed.')
                 return redirect('profile')
     else:
         profile_form = ProfileUpdateForm(instance=request.user)
