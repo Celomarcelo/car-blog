@@ -7,7 +7,7 @@
         <h1>{{ user.username }}'s Profile</h1>
 
         <!-- Form for editing profile information -->
-        <form method="post" action="{% url 'edit_profile' %}">
+        <form method="post" action="{% url 'profile' %}">
             {% csrf_token %}
             <div class="form-group text-left">
                 <label for="id_username">Username</label>
