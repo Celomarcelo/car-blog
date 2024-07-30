@@ -19,7 +19,14 @@
             </div>
             <button type="submit" class="btn btn-primary mt-3">Save Changes</button>
         </form>
-        
+
+
+        <!-- Form for changing password -->
+        <form method="post" action="{% url 'profile' %}" class="mt-4">
+            {% csrf_token %}
+            {{ password_form.as_p }}
+            <button type="submit" name="change_password" class="btn btn-secondary mt-3">Change Password</button>
+        </form>
 
         <!-- Display additional user information -->
         <p class="mt-4"><strong>Date Joined:</strong> {{ user.date_joined }}</p>
