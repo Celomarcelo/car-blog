@@ -5,13 +5,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function checkFormChanges() {
         let currentFormState = new FormData(profileForm);
+        let hasChanges = false;
+
         for (let [key, value] of currentFormState.entries()) {
             if (value !== initialFormState.get(key)) {
-                saveButton.style.display = 'inline-block';
-                return;
+                hasChanges = true;
+                break;
             }
         }
-        saveButton.style.display = 'none';
+
+        saveButton.style.display = hasChanges ? 'inline-block' : 'none';
     }
 
     profileForm.addEventListener('input', checkFormChanges);
