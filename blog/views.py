@@ -131,7 +131,7 @@ def profile(request):
         'password_form': password_form,
     }
 
-    return render(request, 'profile/profile.html', context)
+    return render(request, 'profile.html', context)
 
 class CustomPasswordChangeView(PasswordChangeView):
     template_name = 'registration/password_reset_confirm.html'
