@@ -108,6 +108,9 @@ def register(request):
 # View to display the user's profile
 @login_required
 def profile(request):
+    profile_form = ProfileUpdateForm(instance=request.user)
+    password_form = PasswordChangeForm(request.user)
+    
     if request.method == 'POST':
         if 'update_profile' in request.POST:
             profile_form = ProfileUpdateForm(request.POST, instance=request.user)
@@ -122,10 +125,7 @@ def profile(request):
                 update_session_auth_hash(request, user) 
                 messages.success(request, 'Your password has been successfully changed.')
                 return redirect('profile')
-    else:
-        profile_form = ProfileUpdateForm(instance=request.user)
-        password_form = PasswordChangeForm(request.user)
-
+      
     context = {
         'profile_form': profile_form,
         'password_form': password_form,
