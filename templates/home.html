@@ -32,12 +32,6 @@
                 <p class="card-text">{{ post.content|truncatewords:10 }}...</p>
                 <p class="card-text"><small class="text-muted">By {{ post.author.username }}</small></p>
                 <a href="{% url 'login' %}?next={% url 'post_detail' post.id %}" class="btn btn-primary">Read More</a>
-                <!-- Alert for users who are not logged in -->
-                <div class="alert alert-warning" role="alert">
-                    You are not registered yet. <a href="{% url 'register' %}" class="alert-link">Sign up here</a> to
-                    start
-                    posting and access more features.
-                </div>
                 {% endif %}
 
             </div>
