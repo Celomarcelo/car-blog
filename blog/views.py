@@ -5,6 +5,8 @@ from django.contrib.auth.decorators import login_required
 from .models import Post, Category
 from .forms import PostForm, CustomUserCreationForm, CommentForm, ProfileUpdateForm
 from django.contrib.auth.models import User
+from django.contrib.auth.views import PasswordChangeView
+from django.urls import reverse_lazy
 from django.contrib import messages
 
 # View function for the home page
@@ -117,7 +119,7 @@ def profile(request):
             password_form = PasswordChangeForm(request.user, request.POST)
             if password_form.is_valid():
                 user = password_form.save()
-                update_session_auth_hash(request, user)  # Importante!
+                update_session_auth_hash(request, user) 
                 messages.success(request, 'Your password has been successfully changed.')
                 return redirect('profile')
     else:
