@@ -111,7 +111,7 @@ def profile(request):
     return render(request, 'profile.html', {'user': user})
 
 class CustomPasswordChangeView(PasswordChangeView):
-    template_name = 'password_reset_confirm.html'
+    template_name = 'registration/password_reset_confirm.html'
     success_url = reverse_lazy('profile')
     form_class = PasswordChangeForm
 
