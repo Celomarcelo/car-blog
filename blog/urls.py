@@ -52,4 +52,10 @@ urlpatterns = [
     # Page shown after the password has been successfully reset
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(),
          name='password_reset_complete'),
+    
+    # URL pattern for displaying the user's profile 
+    path('profile/', views.profile, name='profile'),
+    
+    # URL pattern for editing the user's profile 
+    path('profile/edit/', views.edit_profile, name='edit_profile'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
