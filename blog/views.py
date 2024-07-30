@@ -110,8 +110,21 @@ def profile(request):
     user = request.user
     return render(request, 'profile.html', {'user': user})
 
-# Custom view for changing the user's password
 class CustomPasswordChangeView(PasswordChangeView):
     template_name = 'registration/password_reset_confirm.html'
     success_url = reverse_lazy('profile')
     form_class = PasswordChangeForm
+
+# View to edit the user's profile
+@login_required
+def edit_profile(request):
+    user = request.user
+    if request.method == 'POST':
+        form = UserChangeForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')
+    else:
+        form = UserChangeForm(instance=user)
+
+    return render(request, 'edit_profile.html', {'form': form})
