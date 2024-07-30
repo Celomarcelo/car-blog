@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const saveButton = document.getElementById('save_changes');
     const profileForm = document.querySelector('form');
     let initialFormState = new FormData(profileForm);
@@ -16,4 +16,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     profileForm.addEventListener('input', checkFormChanges);
     profileForm.addEventListener('change', checkFormChanges);
+
+    saveButton.style.display = 'none';
 });
