@@ -1,10 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.forms import UserChangeForm
+from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from .models import Post, Category
 from .forms import PostForm, CustomUserCreationForm, CommentForm
 from django.contrib.auth.models import User
+from django.contrib.auth.views import PasswordChangeView
+from django.urls import reverse_lazy
 
 # View function for the home page
 def home(request):
@@ -107,6 +109,11 @@ def register(request):
 def profile(request):
     user = request.user
     return render(request, 'profile.html', {'user': user})
+
+class CustomPasswordChangeView(PasswordChangeView):
+    template_name = 'password_reset_confirm.html'
+    success_url = reverse_lazy('profile')
+    form_class = PasswordChangeForm
 
 # View to edit the user's profile
 @login_required
