@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 
 # View function for the home page
 def home(request):
-    posts = Post.objects.filter(approved=True)
+    posts = Post.objects.filter(approved=True).order_by('-created_at')
     categories = Category.objects.all()
     return render(request, 'home.html', {'posts': posts, 'categories': categories})
 
