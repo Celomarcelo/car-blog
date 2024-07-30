@@ -56,10 +56,5 @@ urlpatterns = [
     
     # URL pattern for displaying the user's profile 
     path('profile/', views.profile, name='profile'),
-    
-    # URL pattern for changing the user's password
-    path('profile/change_password/', CustomPasswordChangeView.as_view(), name='change_password'),
-    
-    # URL pattern for editing the user's profile 
-    path('profile/edit/', views.edit_profile, name='edit_profile'),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
