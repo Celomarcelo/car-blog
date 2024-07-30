@@ -1,12 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from .models import Post, Category
-from .forms import PostForm, CustomUserCreationForm, CommentForm
+from .forms import PostForm, CustomUserCreationForm, CommentForm, ProfileUpdateForm
 from django.contrib.auth.models import User
 from django.contrib.auth.views import PasswordChangeView
 from django.urls import reverse_lazy
+from django.contrib import messages
 
 # View function for the home page
 def home(request):
@@ -107,8 +108,30 @@ def register(request):
 # View to display the user's profile
 @login_required
 def profile(request):
-    user = request.user
-    return render(request, 'profile.html', {'user': user})
+    if request.method == 'POST':
+        if 'update_profile' in request.POST:
+            profile_form = ProfileUpdateForm(request.POST, instance=request.user)
+            if profile_form.is_valid():
+                profile_form.save()
+                messages.success(request, 'Seu perfil foi atualizado com sucesso.')
+                return redirect('profile')
+        elif 'change_password' in request.POST:
+            password_form = PasswordChangeForm(request.user, request.POST)
+            if password_form.is_valid():
+                user = password_form.save()
+                update_session_auth_hash(request, user)  # Importante!
+                messages.success(request, 'Sua senha foi alterada com sucesso.')
+                return redirect('profile')
+    else:
+        profile_form = ProfileUpdateForm(instance=request.user)
+        password_form = PasswordChangeForm(request.user)
+
+    context = {
+        'profile_form': profile_form,
+        'password_form': password_form,
+    }
+
+    return render(request, 'profile/profile.html', context)
 
 class CustomPasswordChangeView(PasswordChangeView):
     template_name = 'registration/password_reset_confirm.html'
