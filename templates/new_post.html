@@ -11,9 +11,9 @@
                     <label for="id_title" class="form-label">Title</label>
                     {{ form.title }}
                 </div>
-                <div class="mb-3 w-100">
+                <div class="mb-3">
                     <label for="id_content" class="form-label">Content</label>
-                    {{ form.content }}
+                    {{ form.content|attr:"class:form-control" }}
                 </div>
                 <div class="mb-3">
                     <label for="id_image" class="form-label">Image</label>
