@@ -12,7 +12,7 @@ class PostForm(forms.ModelForm):
         model = Post
         fields = ['title', 'content', 'image', 'category']
         widgets = {
-            'content': forms.Textarea(attrs={'rows': 5}),
+            'content': forms.Textarea(attrs={'class': 'form-control', 'rows': 5}),
         }
 
 
