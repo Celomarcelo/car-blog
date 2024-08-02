@@ -61,7 +61,39 @@ Carblog is a website dedicated to automotive enthusiasts who want to stay inform
 ### Check List
 
 - A feature checklist was created to ensure all necessary tests.
-  ![checklist](assets/images/checklist.jpg)
+  
+  | **Function**                | **Behavior**                               | **Pass/Fail** |
+|-----------------------------|--------------------------------------------|--------------|
+| **Load Page**               | Page loads with the correct layout         | pass         |
+| **Title Display**           | Displays the correct title                 | pass         |
+| **Content Display**         | Shows content based on the page type       | pass         |
+| **Form Display**            | Form fields are correctly rendered         | pass         |
+| **CSRF Token**              | CSRF token is present in forms             | pass         |
+| **Submit Button**           | Submit button is visible and clickable     | pass         |
+| **Validation Messages**     | Displays validation messages where required| pass         |
+| **Success Messages**        | Shows success messages (e.g., on login, logout) | pass     |
+| **Error Messages**          | Displays error messages (e.g., on failed login) | pass    |
+| **Image Display**           | Displays images if available               | pass         |
+| **Form Field Rendering**    | Form fields render correctly (e.g., text fields, dropdowns) | pass |
+| **Link Navigation**         | Links navigate to the correct pages        | pass         |
+| **Dynamic Content**         | Displays dynamic content (e.g., posts, comments) | pass     |
+| **Button Functionality**    | Buttons perform their intended actions (e.g., save, cancel) | pass |
+| **Logout Functionality**    | Successfully logs out and displays logout message | pass  |
+| **Login Functionality**     | Login form submits correctly and shows login errors | pass  |
+| **Password Reset**          | Handles password reset correctly (request, confirm, and success) | pass |
+| **Page Responsiveness**     | Page is responsive and works on different screen sizes | pass |
+| **User Authentication Check** | User-specific content is displayed correctly | pass    |
+| **Comment Form**            | Comment form submits correctly for logged-in users | pass   |
+| **Category Links**          | Category links filter posts correctly      | pass         |
+| **Post Editing**            | Allows editing of posts and saves changes | pass          |
+| **Post Deletion**           | Allows post deletion and confirms action  | pass          |
+| **Registration**            | Allows new user registration and shows errors if needed | pass |
+| **Admin Access**            | Admin-specific links and functionalities are accessible for superusers | pass |
+| **Review Notice**           | Shows review notice when creating new posts | pass        |
+| **Result Navigation**       | Navigates to results or summary pages appropriately | pass   |
+| **Username Display**        | Displays username on relevant pages (e.g., profile) | pass    |
+| **Form Field Styling**      | Form fields are styled correctly           | pass         |
+| **Error Handling**          | Handles errors (e.g., form submission errors) gracefully | pass  |
 
 ### Lighthouse Tests
 
