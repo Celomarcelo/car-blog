@@ -62,8 +62,8 @@ Carblog is a website dedicated to automotive enthusiasts who want to stay inform
 
 - A feature checklist was created to ensure all necessary tests.
   
-  | **Function**                | **Behavior**                               | **Pass/Fail** |
-|-----------------------------|--------------------------------------------|--------------|
+| **Function**                | **Behavior**                               | **Pass/Fail** |
+|-----------------------------|--------------------------------------------|---------------|
 | **Load Page**               | Page loads with the correct layout         | pass         |
 | **Title Display**           | Displays the correct title                 | pass         |
 | **Content Display**         | Shows content based on the page type       | pass         |
