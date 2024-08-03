@@ -34,7 +34,7 @@ def new_post(request):
                 result = upload(image_file, transformation=[
                     {'width': 800, 'height': 600, 'crop': 'limit', 'quality': 'auto', 'fetch_format': 'auto'}
                 ])
-                post.image = result['url']
+                post.image = result
             post.save()
             return redirect('home')
     else:

@@ -27,7 +27,7 @@ class Post(models.Model):
     approved = models.BooleanField(default=False)
     category = models.ForeignKey(
         Category, on_delete=models.CASCADE, related_name='posts', null=True, blank=True)
-    image = models.URLField(max_length=200, blank=True, null=True)
+    image = models.ImageField(upload_to='post_images/', blank=True, null=True)
 
     def __str__(self):
         """
