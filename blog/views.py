@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm
+from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import authenticate, login, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from .models import Post, Category
 from .forms import PostForm, CustomUserCreationForm, CommentForm, ProfileUpdateForm
 from django.contrib.auth.models import User
 from django.contrib import messages
+from cloudinary.uploader import upload
 
 # View function for the home page
 def home(request):
@@ -28,6 +29,12 @@ def new_post(request):
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
+            if 'image' in request.FILES:
+                image_file = request.FILES['image']
+                result = upload(image_file, transformation=[
+                    {'width': 800, 'height': 600, 'crop': 'limit', 'quality': 'auto', 'fetch_format': 'auto'}
+                ])
+                post.image = result['url']
             post.save()
             return redirect('home')
     else:
