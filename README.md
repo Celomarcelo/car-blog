@@ -98,12 +98,9 @@ Carblog is a website dedicated to automotive enthusiasts who want to stay inform
 ### Lighthouse Tests
 
 - Lighthouse tests were conducted on all pages to ensure performance.
-  - Home Page
-    ![Home](assets/images/lighthouse-index-page.png)
-  - News Page
-    ![News](assets/images/lighthouse-news-page.png)
-  - Review Page
-    ![Reviews](assets/images/lighthouse-reviews-page.png)
+
+    ![Home](static/images/lighthouse.png)
+  
 
 ## Deployment
 
