@@ -22,7 +22,7 @@
                 <h5 class="card-title">{{ post.title }}</h5>
                 <!-- Display image if available -->
                 {% if post.image %}
-                <img src="{{ post.image.url }}" alt="{{ post.title }}" class="img-fluid" loading="lazy">
+                <img src="{{ post.image.url }}" alt="{{ post.title }}" class="img-fluid">
                 {% endif %}
                 {% if user.is_authenticated %}
                 <p class="card-text">{{ post.content|truncatewords:30 }}</p>
