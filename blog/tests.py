@@ -4,6 +4,9 @@ from django.contrib.auth.models import User
 
 
 class CategoryModelTest(TestCase):
+    """
+    Test case for the Category model.
+    """
     def setUp(self):
         """
         Set up the initial data for the category model test.
@@ -17,6 +20,9 @@ class CategoryModelTest(TestCase):
         self.assertEqual(str(self.category), "Technology")
         
 class PostModelTest(TestCase):
+    """
+    Test case for the Post model.
+    """
     def setUp(self):
         """
         Set up the initial data for the post model test.
@@ -42,6 +48,9 @@ class PostModelTest(TestCase):
         self.assertEqual(str(self.post), 'Django Testing')
 
 class CommentModelTest(TestCase):
+    """
+    Test case for the Comment model.
+    """
     def setUp(self):
         """
         Set up the initial data for the comment model test.

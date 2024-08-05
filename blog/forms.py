@@ -7,6 +7,11 @@ from django.contrib.auth.models import User
 class PostForm(forms.ModelForm):
     """
     A form for creating and updating Post instances.
+    
+    Meta:
+    - model: The model associated with this form (Post).
+    - fields: The fields of the Post model to be included in the form.
+    - widgets: Custom widgets for the fields.
     """
     class Meta:
         model = Post
@@ -19,6 +24,9 @@ class PostForm(forms.ModelForm):
 class CustomUserCreationForm(UserCreationForm):
     """
     A form for creating new users, with email field required.
+    
+    Fields:
+    - email: An email field required for user registration.
     """
     email = forms.EmailField(required=True)
 
@@ -29,6 +37,12 @@ class CustomUserCreationForm(UserCreationForm):
     def save(self, commit=True):
         """
         Save the provided password in hashed format and email.
+        
+        Parameters:
+        - commit: Boolean indicating whether to save the model instance.
+        
+        Returns:
+        - user: The saved user instance.
         """
         user = super().save(commit=False)
         user.email = self.cleaned_data["email"]
@@ -40,6 +54,11 @@ class CustomUserCreationForm(UserCreationForm):
 class CommentForm(forms.ModelForm):
     """
     A form for creating and updating Comment instances.
+    
+    Meta:
+    - model: The model associated with this form (Comment).
+    - fields: The fields of the Comment model to be included in the form.
+    - widgets: Custom widgets for the fields.
     """
     class Meta:
         model = Comment
@@ -49,6 +68,13 @@ class CommentForm(forms.ModelForm):
         }
         
 class ProfileUpdateForm(forms.ModelForm):
+    """
+    A form for updating user profile information.
+    
+    Meta:
+    - model: The model associated with this form (User).
+    - fields: The fields of the User model to be included in the form.
+    """
     class Meta:
         model = User
         fields = ['username', 'email']

@@ -5,7 +5,10 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 
-
+"""
+URL configuration for the blog application.
+Includes routes for home, post details, user posts, and more.
+"""
 urlpatterns = [
     # Home page of the blog
     path('', views.home, name='home'),
