@@ -23,7 +23,8 @@ urlpatterns = [
     path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
     
     # Logout page for users
-    path('logout/', auth_views.LogoutView.as_view(template_name='logged_out.html'), name='logout'),
+    path('logout/', views.custom_logout, name='logout'),
+    path('logged_out/', auth_views.LogoutView.as_view(template_name='logged_out.html'), name='logout'),
     
     # Page to display all posts by a specific user
     path('user/<str:username>/posts/', views.user_posts, name='user_posts'),
