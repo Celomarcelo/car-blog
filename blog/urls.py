@@ -31,6 +31,9 @@ urlpatterns = [
     # Page to display details of a specific post
     path('post/<int:post_id>/', views.post_detail, name='post_detail'),
     
+    # Page to delete user comment
+    path('comment/<int:comment_id>/delete/', views.comment_delete, name='comment_delete'),
+    
     # Page to edit a specific post
     path('post/<int:post_id>/edit/', views.post_edit, name='post_edit'),
     
