@@ -6,6 +6,7 @@ from .models import Post, Category, Comment
 from .forms import PostForm, CustomUserCreationForm, CommentForm, ProfileUpdateForm
 from django.contrib.auth.models import User
 from django.contrib import messages
+from django.views.decorators.http import require_POST
 
 
 
@@ -239,6 +240,7 @@ def profile(request):
 
     return render(request, 'profile.html', context)
 
+@require_POST
 def custom_logout(request):
     if request.method == 'POST':
         logout(request) 
