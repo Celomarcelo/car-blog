@@ -50,8 +50,8 @@ Carblog is a website dedicated to automotive enthusiasts who want to stay inform
 ### Validator Testing
 
 - HTML
-  - No errors were returned when passing through the [W3C validator](https://validator.w3.org)
-    ![validator](static/images/html%20valid.png)
+  - No errors were found on the other pages, except the following: [W3C validator](https://validator.w3.org)
+    ![validator](static/images/Captura%20de%20Tela%202024-08-05%20às%2011.23.12.png)
   
 
 - CSS
