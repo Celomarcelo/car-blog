@@ -9,16 +9,15 @@ from django.contrib import messages
 from django.views.decorators.http import require_POST
 
 
-
 def home(request):
     """
     View function for the home page.
 
     Displays all approved posts ordered by creation date and all categories.
-    
+
     Parameters:
     - request: The HTTP request object.
-    
+
     Returns:
     - HTTPResponse: Renders the home page with posts and categories.
     """
@@ -30,11 +29,11 @@ def home(request):
 def category_filter(request, category_id):
     """
     View function to filter posts by category.
-    
+
     Parameters:
     - request: The HTTP request object.
     - category_id: The ID of the category to filter posts by.
-    
+
     Returns:
     - HTTPResponse: Renders the category page with filtered posts.
     """
@@ -48,10 +47,10 @@ def category_filter(request, category_id):
 def new_post(request):
     """
     View function to create a new post, accessible only to logged-in users.
-    
+
     Parameters:
     - request: The HTTP request object.
-    
+
     Returns:
     - HTTPResponse: Redirects to home page after creating a post or renders the new post form.
     """
@@ -72,11 +71,11 @@ def new_post(request):
 def user_posts(request, username):
     """
     View function to display all posts by a specific user.
-    
+
     Parameters:
     - request: The HTTP request object.
     - username: The username of the user whose posts are to be displayed.
-    
+
     Returns:
     - HTTPResponse: Renders the user posts page with the user's posts.
     """
@@ -89,11 +88,11 @@ def user_posts(request, username):
 def post_detail(request, post_id):
     """
     View function to display the details of a specific post.
-    
+
     Parameters:
     - request: The HTTP request object.
     - post_id: The ID of the post to display.
-    
+
     Returns:
     - HTTPResponse: Renders the post detail page with comments and comment form.
     """
@@ -116,7 +115,8 @@ def post_detail(request, post_id):
         'comments': comments,
         'comment_form': comment_form,
     })
-    
+
+
 @login_required
 def comment_delete(request, comment_id):
     """
@@ -131,7 +131,7 @@ def comment_delete(request, comment_id):
     if request.method == 'POST':
         comment.delete()
         return redirect('post_detail', post_id=comment.post.id)
-    
+
     return render(request, 'comment_confirm_delete.html', {'comment': comment})
 
 
@@ -139,11 +139,11 @@ def comment_delete(request, comment_id):
 def post_edit(request, post_id):
     """
     View function to edit a specific post, accessible only to logged-in users.
-    
+
     Parameters:
     - request: The HTTP request object.
     - post_id: The ID of the post to be edited.
-    
+
     Returns:
     - HTTPResponse: Redirects to post detail page after editing or renders the edit post form.
     """
@@ -162,29 +162,35 @@ def post_edit(request, post_id):
 def post_delete(request, post_id):
     """
     View function to delete a specific post, accessible only to logged-in users.
-    
+
     Parameters:
     - request: The HTTP request object.
     - post_id: The ID of the post to be deleted.
-    
+
     Returns:
     - HTTPResponse: Redirects to the user's posts page after deletion or renders the delete confirmation page.
     """
     post = get_object_or_404(Post, pk=post_id)
     if request.method == 'POST':
-        post.delete()
-        return redirect('user_posts', username=post.author.username)
+        try:
+            post.delete()
+            messages.success(
+            request, f'The post "{post.title}" was successfully deleted.')
+            return redirect('user_posts', username=post.author.username)
+        except Exception as e:
+            messages.error(
+            request, 'An error occurred while trying to delete the post. Please try again.')
+        return redirect('post_detail', post_id=post_id)
     return render(request, 'post_confirm_delete.html', {'post': post})
-
 
 
 def register(request):
     """
     View function to handle user registration.
-    
+
     Parameters:
     - request: The HTTP request object.
-    
+
     Returns:
     - HTTPResponse: Redirects to home page after successful registration or renders the registration form.
     """
@@ -206,33 +212,36 @@ def register(request):
 def profile(request):
     """
     View to display the user's profile.
-    
+
     Handles profile updates and password changes.
-    
+
     Parameters:
     - request: The HTTP request object.
-    
+
     Returns:
     - HTTPResponse: Redirects to profile page after updating profile or changing password, or renders the profile form.
     """
     profile_form = ProfileUpdateForm(instance=request.user)
     password_form = PasswordChangeForm(request.user)
-    
+
     if request.method == 'POST':
         if 'update_profile' in request.POST:
-            profile_form = ProfileUpdateForm(request.POST, instance=request.user)
+            profile_form = ProfileUpdateForm(
+                request.POST, instance=request.user)
             if profile_form.is_valid():
                 profile_form.save()
-                messages.success(request, 'Your profile has been successfully updated.')
+                messages.success(
+                    request, 'Your profile has been successfully updated.')
                 return redirect('profile')
         elif 'change_password' in request.POST:
             password_form = PasswordChangeForm(request.user, request.POST)
             if password_form.is_valid():
                 user = password_form.save()
-                update_session_auth_hash(request, user) 
-                messages.success(request, 'Your password has been successfully changed.')
+                update_session_auth_hash(request, user)
+                messages.success(
+                    request, 'Your password has been successfully changed.')
                 return redirect('profile')
-      
+
     context = {
         'profile_form': profile_form,
         'password_form': password_form,
@@ -240,9 +249,10 @@ def profile(request):
 
     return render(request, 'profile.html', context)
 
+
 @require_POST
 def custom_logout(request):
     if request.method == 'POST':
-        logout(request) 
-        return redirect('logged_out')  
+        logout(request)
+        return redirect('logged_out')
     return redirect('/')
