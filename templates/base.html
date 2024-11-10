@@ -81,6 +81,18 @@
         integrity="sha384-7+R57r3oYi6vJbC8MQbfYd9oYpY4skvK5q5P2gr1TX1NjR+Z9NuJZx2e/zp3HR2"
         crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        function autoDismissAlert(alertId, timeout) {
+            setTimeout(function() {
+                var alert = document.getElementById(alertId);
+                if (alert) {
+                    alert.classList.remove('show');
+                    alert.classList.add('fade');
+                    setTimeout(function() { alert.remove(); }, 500);
+                }
+            }, timeout);
+        }
+    </script>
 </body>
 
 </html>
