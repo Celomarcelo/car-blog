@@ -154,7 +154,7 @@ def post_edit(request, post_id):
             form.save()
             messages.success(
                 request, f'Post saved!')
-            return redirect('post_detail', post_id=post.pk)
+            return redirect('post_detail', {'form': form, 'post': post, 'redirect_after': True})
         else:
             messages.error(request, 'An error occurred while trying to edit the post. Please try again.')
     else:
