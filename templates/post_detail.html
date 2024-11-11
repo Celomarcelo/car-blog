@@ -7,31 +7,17 @@
         <div class="container mt-3">
             {% if messages %}
             {% for message in messages %}
-            {% if message.tags == 'warning' %}
-            <div class="alert alert-warning alert-dismissible fade show text-center" role="alert"
-                id="alert-{{ forloop.counter }}">
+            <div class="alert 
+                {% if message.tags == 'success' %}alert-success
+                {% elif message.tags == 'error' %}alert-danger
+                {% elif message.tags == 'warning' %}alert-warning
+                {% endif %}
+                alert-dismissible fade show text-center" role="alert" id="alert-{{ forloop.counter }}">
                 {{ message }}
             </div>
             <script>
-                autoDismissAlert('alert-{{ forloop.counter }}', 5000);
+                autoDismissAlert('alert-{{ forloop.counter }}', 2000);
             </script>
-            {% if message.tags == 'success' %}
-            <div class="alert alert-success alert-dismissible fade show text-center" role="alert"
-                id="alert-{{ forloop.counter }}">
-                {{ message }}
-            </div>
-            <script>
-                autoDismissAlert('alert-{{ forloop.counter }}', 5000);
-            </script>
-            {% elif message.tags == 'error' %}
-            <div class="alert alert-danger alert-dismissible fade show text-center" role="alert"
-                id="alert-{{ forloop.counter }}">
-                {{ message }}
-            </div>
-            <script>
-                autoDismissAlert('alert-{{ forloop.counter }}', 5000);
-            </script>
-            {% endif %}
             {% endfor %}
             {% endif %}
         </div>
