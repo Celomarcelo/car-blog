@@ -5,26 +5,7 @@
     <div class="text-center bg-light p-4 rounded shadow-sm w-100 responsive-container"
         style="width: 100%; max-width: 600px;">
         <h2>Create a New Post</h2>
-        {% if not request.path.startswith('/admin') %}
-        <div class="container mt-3">
-            {% if messages %}
-            {% for message in messages %}
-            <div class="alert 
-                {% if message.tags == 'success' %}alert-success
-                {% elif message.tags == 'error' %}alert-danger
-                {% elif message.tags == 'warning' %}alert-warning
-                {% endif %}
-                alert-dismissible fade show text-center" role="alert" id="alert-{{ forloop.counter }}">
-                {{ message }}
-            </div>
-            <script>
-                autoDismissAlert('alert-{{ forloop.counter }}', 5000);
-            </script>
-            {% endfor %}
-            {% endif %}
-        </div>
-        {% endif %}
-        
+
         <form method="post" class="w-100" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="form-group">
@@ -49,6 +30,15 @@
             <div class="alert alert-warning mt-3" role="alert">
                 <p>Your post is subject to review by the site administrator</p>
             </div>
+            {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
             <button type="submit" class="btn btn-primary mt-3 w-100">Save</button>
         </form>
     </div>
