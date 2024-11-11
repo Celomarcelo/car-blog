@@ -28,4 +28,12 @@
         <a href="{% url 'post_detail' post_id=post.pk %}" class="btn btn-secondary mt-3">Cancel</a>
     </div>
 </div>
+
+{% if redirect_after %}
+<script>
+    setTimeout(function() {
+        window.location.href = "{% url 'post_detail' post_id=post.pk %}";
+    }, 2000);
+</script>
+{% endif %}
 {% endblock %}
