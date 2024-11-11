@@ -136,12 +136,13 @@ def comment_delete(request, comment_id):
         return redirect('post_detail', post_id=comment.post.id)
 
     if request.method == 'POST':
-        comment.delete()
-        messages.success(request, 'Comment deleted successfully.')
-        return redirect('post_detail', post_id=comment.post.id)
-    else:
-        messages.error(
-            request, 'An error occurred while trying to comment. Please try again.')
+        try:
+            comment.delete()
+            messages.success(request, 'Comment deleted successfully.')
+            return redirect('post_detail', post_id=comment.post.id)
+        except Exception as e:
+            messages.error(
+                request, 'An error occurred while trying to delete the comment. Please try again.')
 
     return render(request, 'comment_confirm_delete.html', {'comment': comment})
 
