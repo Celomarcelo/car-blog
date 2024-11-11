@@ -106,7 +106,7 @@ def post_detail(request, post_id):
             new_comment.post = post
             new_comment.author = request.user
             new_comment.save()
-            messages.success(
+            messages.warning(
                 request, 'Your comment is under analysis by the administrator.')
             return redirect('post_detail', post_id=post.id)
         else:
