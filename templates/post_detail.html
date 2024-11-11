@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="d-flex justify-content-center align-items-center">
+<div class="d-flex justify-content-center align-items-center mb-3">
     <div class="text-center bg-light p-4 rounded shadow-sm w-100" style="max-width: 800px;">
         <h1>{{ post.title }}</h1>
         <div class="container mt-3">
@@ -22,7 +22,7 @@
             {% endif %}
         </div>
         <!-- Display post image -->
-        <img src="{{ post.image.url }}" alt="{{ post.title }}" class="img-fluid mb-3">
+        <img src="{{ post.image.url |default:'/static/images/default no img.jpg' }}" alt="{{ post.title }}" class="img-fluid mb-3">
         <p>{{ post.content }}</p>
         <a href="{% url 'home' %}" class="btn btn-secondary mt-3">Back to Posts</a>
         {% if user.is_authenticated and user == post.author %}
