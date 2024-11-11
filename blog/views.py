@@ -59,6 +59,10 @@ def new_post(request):
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
+            
+            if not post.image:
+                post.image.name = 'static/images/default_no_img.jpg'
+                
             post.save()
             return redirect('home')
     else:
