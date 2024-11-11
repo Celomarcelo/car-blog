@@ -63,10 +63,10 @@ def new_post(request):
             messages.warning(
                 request, 'Your post is under analysis by the administrator.')
             return redirect('home')
+        else:
+            messages.error(request, 'There was an error with your post. Please try again.')
     else:
         form = PostForm()
-        messages.error(
-                request, 'There was an error with your post. Please try again.')
 
     return render(request, 'new_post.html', {'form': form})
 
