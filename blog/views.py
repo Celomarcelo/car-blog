@@ -106,10 +106,12 @@ def post_detail(request, post_id):
             new_comment.post = post
             new_comment.author = request.user
             new_comment.save()
-            messages.success(request, 'Your comment is under analysis by the administrator.')
+            messages.success(
+                request, 'Your comment is under analysis by the administrator.')
             return redirect('post_detail', post_id=post.id)
         else:
-            messages.error(request, 'There was an error with your comment. Please try again.')
+            messages.error(
+                request, 'There was an error with your comment. Please try again.')
     else:
         comment_form = CommentForm()
 
@@ -129,11 +131,17 @@ def comment_delete(request, comment_id):
 
     # Ensure that the user trying to delete the comment is the author
     if comment.author != request.user:
+        messages.error(
+            request, "You don't have permission to delete this comment.")
         return redirect('post_detail', post_id=comment.post.id)
 
     if request.method == 'POST':
         comment.delete()
+        messages.success(request, 'Comment deleted successfully.')
         return redirect('post_detail', post_id=comment.post.id)
+    else:
+        messages.error(
+            request, 'An error occurred while trying to comment. Please try again.')
 
     return render(request, 'comment_confirm_delete.html', {'comment': comment})
 
@@ -155,16 +163,17 @@ def post_edit(request, post_id):
         post = get_object_or_404(Post, pk=post_id)
         if request.method == 'POST':
             form = PostForm(request.POST, instance=post)
-            
+
             if form.is_valid():
                 form.save()
                 messages.success(request, 'Post saved!')
                 return render(request, 'post_edit.html', {'form': form, 'post': post, 'redirect_after': True})
             else:
-                messages.error(request, 'An error occurred while trying to edit the post. Please try again.')
+                messages.error(
+                    request, 'An error occurred while trying to edit the post. Please try again.')
         else:
             form = PostForm(instance=post)
-        
+
         return render(request, 'post_edit.html', {'form': form, 'post': post})
     except Exception as e:
         raise e
