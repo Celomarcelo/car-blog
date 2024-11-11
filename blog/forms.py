@@ -19,6 +19,13 @@ class PostForm(forms.ModelForm):
         widgets = {
             'content': forms.Textarea(attrs={'class': 'form-control', 'rows': 5}),
         }
+        
+    def __init__(self, *args, **kwargs):
+        super(PostForm, self).__init__(*args, **kwargs)
+        self.fields['title'].required = True
+        self.fields['content'].required = True
+        self.fields['image'].required = True
+        self.fields['category'].required = True
 
 
 class CustomUserCreationForm(UserCreationForm):
