@@ -150,26 +150,20 @@ def post_edit(request, post_id):
 
     try:
         post = get_object_or_404(Post, pk=post_id)
-        print("Post retrieved:", post)
-        
         if request.method == 'POST':
             form = PostForm(request.POST, instance=post)
-            print("Form POST data:", request.POST)
             
             if form.is_valid():
                 form.save()
                 messages.success(request, 'Post saved!')
-                print("Form saved successfully.")
                 return render(request, 'post_edit.html', {'form': form, 'post': post, 'redirect_after': True})
             else:
                 messages.error(request, 'An error occurred while trying to edit the post. Please try again.')
-                print("Form is not valid.")
         else:
             form = PostForm(instance=post)
         
         return render(request, 'post_edit.html', {'form': form, 'post': post})
     except Exception as e:
-        print("Error occurred:", e)
         raise e
 
 

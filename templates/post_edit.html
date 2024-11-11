@@ -8,13 +8,23 @@
         <div class="container mt-3">
             {% if messages %}
             {% for message in messages %}
-            <!-- Alert message -->
-            <div class="alert alert-success alert-dismissible fade show" role="alert" id="alert-{{ forloop.counter }}">
+            {% if message.tags == 'success' %}
+            <div class="alert alert-success alert-dismissible fade show text-center" role="alert"
+                id="alert-{{ forloop.counter }}">
                 {{ message }}
             </div>
             <script>
                 autoDismissAlert('alert-{{ forloop.counter }}', 2000);
             </script>
+            {% elif message.tags == 'error' %}
+            <div class="alert alert-danger alert-dismissible fade show text-center" role="alert"
+                id="alert-{{ forloop.counter }}">
+                {{ message }}
+            </div>
+            <script>
+                autoDismissAlert('alert-{{ forloop.counter }}', 2000);
+            </script>
+            {% endif %}
             {% endfor %}
             {% endif %}
         </div>
@@ -31,7 +41,7 @@
 
 {% if redirect_after %}
 <script>
-    setTimeout(function() {
+    setTimeout(function () {
         window.location.href = "{% url 'post_detail' post_id=post.pk %}";
     }, 2000);
 </script>
