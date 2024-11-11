@@ -22,7 +22,7 @@
             {% endif %}
         </div>
         <!-- Display post image -->
-        <img src="{{ post.image.url|default: '{% static "images/default_no_img.jpg" %}' }}" alt="{{ post.title }}" class="img-fluid mb-3">
+        <img src="{{ post.image.url|default: '{% static "staticfiles/images/default_no_img.jpg" %}' }}" alt="{{ post.title }}" class="img-fluid mb-3">
         <p>{{ post.content }}</p>
         <a href="{% url 'home' %}" class="btn btn-secondary mt-3">Back to Posts</a>
         {% if user.is_authenticated and user == post.author %}

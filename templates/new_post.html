@@ -5,6 +5,23 @@
     <div class="text-center bg-light p-4 rounded shadow-sm w-100 responsive-container"
         style="width: 100%; max-width: 600px;">
         <h2>Create a New Post</h2>
+        <div class="container mt-3">
+            {% if messages %}
+            {% for message in messages %}
+            <div class="alert 
+                {% if message.tags == 'success' %}alert-success
+                {% elif message.tags == 'error' %}alert-danger
+                {% elif message.tags == 'warning' %}alert-warning
+                {% endif %}
+                alert-dismissible fade show text-center" role="alert" id="alert-{{ forloop.counter }}">
+                {{ message }}
+            </div>
+            <script>
+                autoDismissAlert('alert-{{ forloop.counter }}', 5000);
+            </script>
+            {% endfor %}
+            {% endif %}
+        </div>
         <form method="post" class="w-100" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="form-group">

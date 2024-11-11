@@ -59,14 +59,14 @@ def new_post(request):
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
-            
-            if not post.image:
-                post.image.name = 'static/images/default_no_img.jpg'
-                
             post.save()
+            messages.warning(
+                request, 'Your post is under analysis by the administrator.')
             return redirect('home')
     else:
         form = PostForm()
+        messages.error(
+                request, 'There was an error with your post. Please try again.')
 
     return render(request, 'new_post.html', {'form': form})
 
