@@ -5,6 +5,19 @@
     <div class="text-center bg-light p-4 rounded shadow-sm w-100" style="max-width: 600px;">
         <!-- Form for editing the post -->
         <h1>Edit Post</h1>
+        <div class="container mt-3">
+            {% if messages %}
+            {% for message in messages %}
+            <!-- Alert message -->
+            <div class="alert alert-success alert-dismissible fade show" role="alert" id="alert-{{ forloop.counter }}">
+                {{ message }}
+            </div>
+            <script>
+                autoDismissAlert('alert-{{ forloop.counter }}', 5000);
+            </script>
+            {% endfor %}
+            {% endif %}
+        </div>
         <form method="post">
             {% csrf_token %}
             {{ form.as_p }}

@@ -152,9 +152,13 @@ def post_edit(request, post_id):
         form = PostForm(request.POST, instance=post)
         if form.is_valid():
             form.save()
+            messages.success(
+                request, f'Post saved!')
             return redirect('post_detail', post_id=post.pk)
     else:
         form = PostForm(instance=post)
+        messages.error(
+            request, 'An error occurred while trying to edit the post. Please try again.')
     return render(request, 'post_edit.html', {'form': form, 'post': post})
 
 
@@ -175,11 +179,11 @@ def post_delete(request, post_id):
         try:
             post.delete()
             messages.success(
-            request, f'The post "{post.title}" was successfully deleted.')
+                request, f'The post "{post.title}" was successfully deleted.')
             return redirect('user_posts', username=post.author.username)
         except Exception as e:
             messages.error(
-            request, 'An error occurred while trying to delete the post. Please try again.')
+                request, 'An error occurred while trying to delete the post. Please try again.')
         return redirect('post_detail', post_id=post_id)
     return render(request, 'post_confirm_delete.html', {'post': post})
 
