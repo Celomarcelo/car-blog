@@ -91,7 +91,7 @@ def user_posts(request, username):
 
 
 @login_required
-def post_detail(request, post_id):
+def post_detail(request, slug):
     """
     View function to display the details of a specific post.
 
@@ -102,7 +102,7 @@ def post_detail(request, post_id):
     Returns:
     - HTTPResponse: Renders the post detail page with comments and comment form.
     """
-    post = get_object_or_404(Post, id=post_id)
+    post = get_object_or_404(Post, slug=slug)
     comments = post.comments.filter(approved=True)
 
     if request.method == 'POST':
@@ -114,7 +114,7 @@ def post_detail(request, post_id):
             new_comment.save()
             messages.warning(
                 request, 'Your comment is under analysis by the administrator.')
-            return redirect('post_detail', post_id=post.id)
+            return redirect('post_detail', slug=slug)
         else:
             messages.error(
                 request, 'There was an error with your comment. Please try again.')
@@ -139,22 +139,18 @@ def comment_delete(request, comment_id):
     if comment.author != request.user:
         messages.error(
             request, "You don't have permission to delete this comment.")
-        return redirect('post_detail', post_id=comment.post.id)
+        return redirect('post_detail', slug=comment.post.slug)
 
     if request.method == 'POST':
-        try:
             comment.delete()
             messages.success(request, 'Comment deleted successfully.')
-            return redirect('post_detail', post_id=comment.post.id)
-        except Exception as e:
-            messages.error(
-                request, 'An error occurred while trying to delete the comment. Please try again.')
-
+            return redirect('post_detail', slug=comment.post.slug)
+        
     return render(request, 'comment_confirm_delete.html', {'comment': comment})
 
 
 @login_required
-def post_edit(request, post_id):
+def post_edit(request, slug):
     """
     View function to edit a specific post, accessible only to logged-in users.
     Allows editing only if the logged-in user is the author of the post.
@@ -167,11 +163,11 @@ def post_edit(request, post_id):
     - HTTPResponse: Redirects to post detail page after editing or renders the edit post form.
     """
 
-    post = get_object_or_404(Post, pk=post_id)
+    post = get_object_or_404(Post, slug=slug)
 
     if post.author != request.user:
         messages.error(request, "You don't have permission to edit this post.")
-        return redirect('post_detail', post_id=post_id)
+        return redirect('post_detail', slug=slug)
 
     if request.method == 'POST':
         form = PostForm(request.POST, instance=post)
@@ -179,7 +175,7 @@ def post_edit(request, post_id):
         if form.is_valid():
             form.save()
             messages.success(request, 'Post saved!')
-            return redirect('post_detail', post_id=post_id)
+            return redirect('post_detail', slug=slug)
         else:
             messages.error(
                 request, 'An error occurred while trying to edit the post. Please try again.')
@@ -190,7 +186,7 @@ def post_edit(request, post_id):
 
 
 @login_required
-def post_delete(request, post_id):
+def post_delete(request, slug):
     """
     View function to delete a specific post, accessible only to logged-in users.
 
@@ -201,7 +197,12 @@ def post_delete(request, post_id):
     Returns:
     - HTTPResponse: Redirects to the user's posts page after deletion or renders the delete confirmation page.
     """
-    post = get_object_or_404(Post, pk=post_id)
+    post = get_object_or_404(Post, slug=slug)
+    
+    if post.author != request.user:
+        messages.error(request, "You don't have permission to delete this post.")
+        return redirect('post_detail', slug=slug)
+    
     if request.method == 'POST':
         try:
             post.delete()
@@ -211,7 +212,8 @@ def post_delete(request, post_id):
         except Exception as e:
             messages.error(
                 request, 'An error occurred while trying to delete the post. Please try again.')
-        return redirect('post_detail', post_id=post_id)
+            
+        return redirect('post_detail', slug=slug)
     return render(request, 'post_confirm_delete.html', {'post': post})
 
 
@@ -233,7 +235,11 @@ def register(request):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
+            messages.success(request, f"Welcome, {username}! Your account has been created successfully.")
             return redirect('home')
+        else:
+            messages.error(request, "Please correct the errors in the form.")
+            
     else:
         form = CustomUserCreationForm()
     return render(request, 'register.html', {'form': form})

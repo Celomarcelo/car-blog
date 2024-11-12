@@ -30,16 +30,16 @@ urlpatterns = [
     path('user/<str:username>/posts/', views.user_posts, name='user_posts'),
     
     # Page to display details of a specific post
-    path('post/<int:post_id>/', views.post_detail, name='post_detail'),
+    path('post/<slug:slug>/', views.post_detail, name='post_detail'),
     
     # Page to delete user comment
     path('comment/<int:comment_id>/delete/', views.comment_delete, name='comment_delete'),
     
     # Page to edit a specific post
-    path('post/<int:post_id>/edit/', views.post_edit, name='post_edit'),
+    path('post/<slug:slug>/edit/', views.post_edit, name='post_edit'),
     
     # Page to delete a specific post
-    path('post/<int:post_id>/delete/', views.post_delete, name='post_delete'),
+    path('post/<slug:slug>/delete/', views.post_delete, name='post_delete'),
     
     # Page to filter posts by a specific category
     path('category/<int:category_id>/',

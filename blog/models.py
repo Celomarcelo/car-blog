@@ -1,11 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.text import slugify
 
 
 class Category(models.Model):
     """
     Model representing a category for posts.
-    
+
     Fields:
     - name: The name of the category.
     """
@@ -14,7 +15,7 @@ class Category(models.Model):
     def __str__(self):
         """
         String representation of the Category model.
-        
+
         Returns:
         - str: The name of the category.
         """
@@ -24,7 +25,7 @@ class Category(models.Model):
 class Post(models.Model):
     """
     Model representing a blog post.
-    
+
     Fields:
     - title: The title of the post.
     - content: The content of the post.
@@ -44,21 +45,24 @@ class Post(models.Model):
     category = models.ForeignKey(
         Category, on_delete=models.CASCADE, related_name='posts', null=True, blank=True)
     image = models.ImageField(upload_to='post_images/', blank=True, null=True)
+    slug = models.SlugField(unique=True, max_length=200, blank=True)
 
-    def __str__(self):
-        """
-        String representation of the Post model.
-        
-        Returns:
-        - str: The title of the post.
-        """
-        return self.title
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            base_slug = slugify(self.title)
+            slug = base_slug
+            counter = 1
+            while Post.objects.filter(slug=slug).exists():
+                slug = f"{base_slug}-{counter}"
+                counter += 1
+            self.slug = slug
+        super().save(*args, **kwargs)
 
 
 class Comment(models.Model):
     """
     Model representing a comment on a post.
-    
+
     Fields:
     - post: The post the comment is associated with, linked to the Post model.
     - author: The author of the comment, linked to the User model.
@@ -76,7 +80,7 @@ class Comment(models.Model):
     def __str__(self):
         """
         String representation of the Comment model.
-        
+
         Returns:
         - str: A string indicating the author and the post the comment is associated with.
         """
