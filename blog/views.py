@@ -7,6 +7,7 @@ from .forms import PostForm, CustomUserCreationForm, CommentForm, ProfileUpdateF
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.views.decorators.http import require_POST
+from django.core.exceptions import PermissionDenied
 
 
 def home(request):
@@ -64,7 +65,8 @@ def new_post(request):
                 request, 'Your post is under analysis by the administrator.')
             return redirect('home')
         else:
-            messages.error(request, 'There was an error with your post. Please try again.')
+            messages.error(
+                request, 'There was an error with your post. Please try again.')
     else:
         form = PostForm()
 
@@ -155,6 +157,7 @@ def comment_delete(request, comment_id):
 def post_edit(request, post_id):
     """
     View function to edit a specific post, accessible only to logged-in users.
+    Allows editing only if the logged-in user is the author of the post.
 
     Parameters:
     - request: The HTTP request object.
@@ -164,24 +167,26 @@ def post_edit(request, post_id):
     - HTTPResponse: Redirects to post detail page after editing or renders the edit post form.
     """
 
-    try:
-        post = get_object_or_404(Post, pk=post_id)
-        if request.method == 'POST':
-            form = PostForm(request.POST, instance=post)
+    post = get_object_or_404(Post, pk=post_id)
 
-            if form.is_valid():
-                form.save()
-                messages.success(request, 'Post saved!')
-                return render(request, 'post_edit.html', {'form': form, 'post': post, 'redirect_after': True})
-            else:
-                messages.error(
-                    request, 'An error occurred while trying to edit the post. Please try again.')
+    if post.author != request.user:
+        messages.error(request, "You don't have permission to edit this post.")
+        return redirect('post_detail', post_id=post_id)
+
+    if request.method == 'POST':
+        form = PostForm(request.POST, instance=post)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Post saved!')
+            return redirect('post_detail', post_id=post_id)
         else:
-            form = PostForm(instance=post)
+            messages.error(
+                request, 'An error occurred while trying to edit the post. Please try again.')
+    else:
+        form = PostForm(instance=post)
 
-        return render(request, 'post_edit.html', {'form': form, 'post': post})
-    except Exception as e:
-        raise e
+    return render(request, 'post_edit.html', {'form': form, 'post': post})
 
 
 @login_required
