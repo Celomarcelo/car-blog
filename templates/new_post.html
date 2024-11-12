@@ -9,7 +9,7 @@
             {% if messages %}
             {% for message in messages %}
             <div class="alert 
-                {% elif message.tags == 'error' %}alert-danger
+                {% if message.tags == 'error' %}alert-danger
                 {% elif message.tags == 'warning' %}alert-warning
                 {% endif %}
                 alert-dismissible fade show text-center" role="alert" id="alert-{{ forloop.counter }}">
