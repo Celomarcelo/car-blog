@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.views.decorators.http import require_POST
 from django.core.exceptions import PermissionDenied
+from django.contrib.auth import get_user_model
 
 
 def home(request):
@@ -142,10 +143,10 @@ def comment_delete(request, comment_id):
         return redirect('post_detail', slug=comment.post.slug)
 
     if request.method == 'POST':
-            comment.delete()
-            messages.success(request, 'Comment deleted successfully.')
-            return redirect('post_detail', slug=comment.post.slug)
-        
+        comment.delete()
+        messages.success(request, 'Comment deleted successfully.')
+        return redirect('post_detail', slug=comment.post.slug)
+
     return render(request, 'comment_confirm_delete.html', {'comment': comment})
 
 
@@ -198,11 +199,12 @@ def post_delete(request, slug):
     - HTTPResponse: Redirects to the user's posts page after deletion or renders the delete confirmation page.
     """
     post = get_object_or_404(Post, slug=slug)
-    
+
     if post.author != request.user:
-        messages.error(request, "You don't have permission to delete this post.")
+        messages.error(
+            request, "You don't have permission to delete this post.")
         return redirect('post_detail', slug=slug)
-    
+
     if request.method == 'POST':
         try:
             post.delete()
@@ -212,7 +214,7 @@ def post_delete(request, slug):
         except Exception as e:
             messages.error(
                 request, 'An error occurred while trying to delete the post. Please try again.')
-            
+
         return redirect('post_detail', slug=slug)
     return render(request, 'post_confirm_delete.html', {'post': post})
 
@@ -235,18 +237,19 @@ def register(request):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
-            messages.success(request, f"Welcome, {username}! Your account has been created successfully.")
+            messages.success(
+                request, f"Welcome, {username}! Your account has been created successfully.")
             return redirect('home')
         else:
             messages.error(request, "Please correct the errors in the form.")
-            
+
     else:
         form = CustomUserCreationForm()
     return render(request, 'register.html', {'form': form})
 
 
 @login_required
-def profile(request):
+def profile(request, username):
     """
     View to display the user's profile.
 
@@ -258,8 +261,15 @@ def profile(request):
     Returns:
     - HTTPResponse: Redirects to profile page after updating profile or changing password, or renders the profile form.
     """
+    
+    if request.user.username != username:
+        raise PermissionDenied("You do not have permission to view or edit this profile.")
+    
+    user = get_object_or_404(get_user_model(), username=username)
+    
     profile_form = ProfileUpdateForm(instance=request.user)
     password_form = PasswordChangeForm(request.user)
+
 
     if request.method == 'POST':
         if 'update_profile' in request.POST:
