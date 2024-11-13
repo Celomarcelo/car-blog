@@ -239,7 +239,7 @@ def register(request):
             login(request, user)
             messages.success(
                 request, f"Welcome, {username}! Your account has been created successfully.")
-            return redirect('home')
+            return redirect('profile')
         else:
             messages.error(request, "Please correct the errors in the form.")
 
