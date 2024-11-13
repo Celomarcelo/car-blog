@@ -249,7 +249,7 @@ def register(request):
 
 
 @login_required
-def profile(request, username):
+def profile(request):
     """
     View to display the user's profile.
 
@@ -261,11 +261,6 @@ def profile(request, username):
     Returns:
     - HTTPResponse: Redirects to profile page after updating profile or changing password, or renders the profile form.
     """
-    
-    if request.user.username != username:
-        raise PermissionDenied("You do not have permission to view or edit this profile.")
-    
-    user = get_object_or_404(get_user_model(), username=username)
     
     profile_form = ProfileUpdateForm(instance=request.user)
     password_form = PasswordChangeForm(request.user)
