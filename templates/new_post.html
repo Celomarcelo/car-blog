@@ -6,29 +6,42 @@
         style="width: 100%; max-width: 600px;">
         <h2>Create a New Post</h2>
 
-        <!-- Form for creating a post -->
-        <form method="post" class="w-100" enctype="multipart/form-data">
-            <!-- General feedback messages -->
-            {% if show_feedback_messages %}
-            <div class="container mt-3">
-                {% if messages %}
+        <!-- Div for success messages -->
+        {% if messages %}
+        <div class="container mt-3">
+            <div id="success-messages">
                 {% for message in messages %}
-                <div class="alert 
-                {% if message.tags == 'success' %}alert-success
-                {% elif message.tags == 'error' %}alert-danger
-                {% elif message.tags == 'warning' %}alert-warning
-                {% endif %}
-                alert-dismissible fade show text-center" role="alert" id="alert-{{ forloop.counter }}">
-                    {{ message }}
+                {% if message.tags == 'warning' %}
+                <div class="alert alert-warning alert-dismissible fade show text-center" role="alert"
+                    id="alert-{{ forloop.counter }}">
+                    <p>Your post is under analysis by the administrator.</p>
                 </div>
                 <script>
                     autoDismissAlert('alert-{{ forloop.counter }}', 5000);
                 </script>
-                {% endfor %}
                 {% endif %}
+                {% endfor %}
             </div>
-            {% endif %}
-            
+
+            <!-- Div for error messages -->
+            <div id="error-messages">
+                {% for message in messages %}
+                {% if message.tags == 'error' %}
+                <div class="alert alert-danger alert-dismissible fade show text-center" role="alert"
+                    id="alert-{{ forloop.counter }}">
+                    <p>There was an error with your post. Please try again.</p>
+                </div>
+                <script>
+                    autoDismissAlert('alert-{{ forloop.counter }}', 5000);
+                </script>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Form for creating a post -->
+        <form method="post" class="w-100" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="form-group">
 
