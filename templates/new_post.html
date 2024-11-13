@@ -9,15 +9,16 @@
         <!-- Form for creating a post -->
         <form method="post" class="w-100" enctype="multipart/form-data">
             <!-- General feedback messages -->
+            {% if request.resolver_match.url_name == 'new_post' %}
             <div class="container mt-3">
                 {% if messages %}
                 {% for message in messages %}
                 <div class="alert 
-                        {% if message.tags == 'success' %}alert-success
-                        {% elif message.tags == 'error' %}alert-danger
-                        {% elif message.tags == 'warning' %}alert-warning
-                        {% endif %}
-                        alert-dismissible fade show text-center" role="alert" id="alert-{{ forloop.counter }}">
+                {% if message.tags == 'success' %}alert-success
+                {% elif message.tags == 'error' %}alert-danger
+                {% elif message.tags == 'warning' %}alert-warning
+                {% endif %}
+                alert-dismissible fade show text-center" role="alert" id="alert-{{ forloop.counter }}">
                     {{ message }}
                 </div>
                 <script>
@@ -26,6 +27,7 @@
                 {% endfor %}
                 {% endif %}
             </div>
+            {% endif %}
             {% csrf_token %}
             <div class="form-group">
 
