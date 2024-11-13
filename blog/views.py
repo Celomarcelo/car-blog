@@ -71,7 +71,7 @@ def new_post(request):
     else:
         form = PostForm()
 
-    return render(request, 'new_post.html', {'form': form})
+    return render(request, 'new_post.html', {'form': form, 'show_feedback_messages': True})
 
 
 @login_required

@@ -9,7 +9,7 @@
         <!-- Form for creating a post -->
         <form method="post" class="w-100" enctype="multipart/form-data">
             <!-- General feedback messages -->
-            {% if request.resolver_match.url_name == 'new_post' %}
+            {% if show_feedback_messages %}
             <div class="container mt-3">
                 {% if messages %}
                 {% for message in messages %}
@@ -28,6 +28,7 @@
                 {% endif %}
             </div>
             {% endif %}
+            
             {% csrf_token %}
             <div class="form-group">
 
