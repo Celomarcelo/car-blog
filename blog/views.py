@@ -56,18 +56,17 @@ def new_post(request):
     Returns:
     - HTTPResponse: Redirects to home page after creating a post or renders the new post form.
     """
+    context = {}
     if request.method == 'POST':
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
             post.save()
-            messages.warning(
-                request, 'Your post is under analysis by the administrator.')
+            context['warning_message'] = 'Your post is under analysis by the administrator.'
             return redirect('home')
         else:
-            messages.error(
-                request, 'There was an error with your post. Please try again.')
+            context['error_message'] =  'There was an error with your post. Please try again.'
     else:
         form = PostForm()
 
