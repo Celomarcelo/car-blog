@@ -6,97 +6,87 @@
         style="width: 100%; max-width: 600px;">
         <h2>Create a New Post</h2>
 
-        <!-- Div for success messages -->
-        {% if warning_message %}
+        <!-- Div for  messages -->
+        {% if messages %}
         <div class="container mt-3">
-            <div class="alert alert-warning alert-dismissible fade show text-center" role="alert"
-                id="alert-{{ forloop.counter }}">
-                {{ warning_message }}
+            {% for message in messages %}
+            <div class="alert 
+            {% if message.tags == 'success' %}alert-success
+            {% elif message.tags == 'warning' %}alert-warning
+            {% elif message.tags == 'error' %}alert-danger
+            {% endif %}
+            alert-dismissible fade show text-center" role="alert">
+                {{ message }}
             </div>
-            <script>
-                autoDismissAlert('alert-warning', 5000);
-            </script>
+            {% endfor %}
         </div>
         {% endif %}
-        {% if error_message %}
-        <!-- Div for error messages -->
-        <div id="error-messages">
-            <div class="alert alert-danger alert-dismissible fade show text-center" role="alert"
-                id="alert-{{ forloop.counter }}">
-                {{ error_message }}
+
+        <!-- Form for creating a post -->
+        <form method="post" class="w-100" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+
+                <!-- Title field with error display -->
+                <div class="mb-3">
+                    <label for="id_title" class="form-label">Title</label>
+                    {{ form.title }}
+                    {% if form.title.errors %}
+                    <div class="text-danger mt-1">
+                        {% for error in form.title.errors %}
+                        <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Content field with error display -->
+                <div class="mb-3">
+                    <label for="id_content" class="form-label">Content</label>
+                    {{ form.content }}
+                    {% if form.content.errors %}
+                    <div class="text-danger mt-1">
+                        {% for error in form.content.errors %}
+                        <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Image field with error display -->
+                <div class="mb-3">
+                    <label for="id_image" class="form-label">Image</label>
+                    {{ form.image }}
+                    {% if form.image.errors %}
+                    <div class="text-danger mt-1">
+                        {% for error in form.image.errors %}
+                        <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Category field with error display -->
+                <div class="mb-3">
+                    <label for="id_category" class="form-label">Category</label>
+                    {{ form.category }}
+                    {% if form.category.errors %}
+                    <div class="text-danger mt-1">
+                        {% for error in form.category.errors %}
+                        <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
             </div>
-            <script>
-                autoDismissAlert('alert-error', 5000);
-            </script>
-        </div>
+
+            <!-- Warning message for post review notice -->
+            <div class="alert alert-warning mt-3" role="alert">
+                <p>Your post is subject to review by the site administrator</p>
+            </div>
+
+            <button type="submit" class="btn btn-primary mt-3 w-100">Save</button>
+        </form>
     </div>
-    {% endif %}
-
-    <!-- Form for creating a post -->
-    <form method="post" class="w-100" enctype="multipart/form-data">
-        {% csrf_token %}
-        <div class="form-group">
-
-            <!-- Title field with error display -->
-            <div class="mb-3">
-                <label for="id_title" class="form-label">Title</label>
-                {{ form.title }}
-                {% if form.title.errors %}
-                <div class="text-danger mt-1">
-                    {% for error in form.title.errors %}
-                    <p>{{ error }}</p>
-                    {% endfor %}
-                </div>
-                {% endif %}
-            </div>
-
-            <!-- Content field with error display -->
-            <div class="mb-3">
-                <label for="id_content" class="form-label">Content</label>
-                {{ form.content }}
-                {% if form.content.errors %}
-                <div class="text-danger mt-1">
-                    {% for error in form.content.errors %}
-                    <p>{{ error }}</p>
-                    {% endfor %}
-                </div>
-                {% endif %}
-            </div>
-
-            <!-- Image field with error display -->
-            <div class="mb-3">
-                <label for="id_image" class="form-label">Image</label>
-                {{ form.image }}
-                {% if form.image.errors %}
-                <div class="text-danger mt-1">
-                    {% for error in form.image.errors %}
-                    <p>{{ error }}</p>
-                    {% endfor %}
-                </div>
-                {% endif %}
-            </div>
-
-            <!-- Category field with error display -->
-            <div class="mb-3">
-                <label for="id_category" class="form-label">Category</label>
-                {{ form.category }}
-                {% if form.category.errors %}
-                <div class="text-danger mt-1">
-                    {% for error in form.category.errors %}
-                    <p>{{ error }}</p>
-                    {% endfor %}
-                </div>
-                {% endif %}
-            </div>
-        </div>
-
-        <!-- Warning message for post review notice -->
-        <div class="alert alert-warning mt-3" role="alert">
-            <p>Your post is subject to review by the site administrator</p>
-        </div>
-
-        <button type="submit" class="btn btn-primary mt-3 w-100">Save</button>
-    </form>
-</div>
 </div>
 {% endblock %}
