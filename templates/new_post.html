@@ -83,6 +83,21 @@
             <!-- Warning message for post review notice -->
             <div class="alert alert-warning mt-3" role="alert">
                 <p>Your post is subject to review by the site administrator</p>
+                <!-- Div for  messages -->
+                {% if messages %}
+                <div class="container mt-3">
+                    {% for message in messages %}
+                    <div class="alert 
+            {% if message.tags == 'success' %}alert-success
+            {% elif message.tags == 'warning' %}alert-warning
+            {% elif message.tags == 'error' %}alert-danger
+            {% endif %}
+            alert-dismissible fade show text-center" role="alert">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
             </div>
 
             <button type="submit" class="btn btn-primary mt-3 w-100">Save</button>
