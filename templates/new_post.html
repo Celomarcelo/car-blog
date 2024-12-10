@@ -10,14 +10,21 @@
         {% if messages %}
         <div class="container mt-3">
             {% for message in messages %}
-            <div class="alert 
-            {% if message.tags == 'success' %}alert-success
-            {% elif message.tags == 'warning' %}alert-warning
-            {% elif message.tags == 'error' %}alert-danger
-            {% endif %}
-            alert-dismissible fade show text-center" role="alert">
-                {{ message }}
+            {% if message.tags == 'warning' %}
+            <div class="alert alert-warning mt-3" role="alert">
+                <p>Your post is under analysis by the administrator.</p>
             </div>
+            <div class="alert alert-danger mt-3 create-messages" role="alert">
+                <p>There was an error with your post. Please try again.</p>
+            </div>
+            {% elif message.tags == 'error' %}
+            <div class="alert alert-warning mt-3 create-messages" role="alert">
+                <p>Your post is under analysis by the administrator.</p>
+            </div>
+            <div class="alert alert-danger mt-3" role="alert">
+                <p>There was an error with your post. Please try again.</p>
+            </div>
+            {% endif %}
             {% endfor %}
         </div>
         {% endif %}
