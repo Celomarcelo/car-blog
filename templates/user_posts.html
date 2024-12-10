@@ -33,7 +33,7 @@
         <ul class="list-unstyled">
             {% for post in posts %}
             <li class="mb-3">
-                <h2><a href="{% url 'post_detail' post.id %}" class="text-decoration-none">{{ post.title }}</a></h2>
+                <h2><a href="{% url 'post_detail' slug=post.slug %}" class="text-decoration-none">{{ post.title }}</a></h2>
                 <p>{{ post.content|slice:":200" }}...</p>
             </li>
             {% empty %}
