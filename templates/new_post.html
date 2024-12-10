@@ -5,30 +5,6 @@
     <div class="text-center bg-light p-4 rounded shadow-sm w-100 responsive-container"
         style="width: 100%; max-width: 600px;">
         <h2>Create a New Post</h2>
-
-        <!-- Div for  messages -->
-        {% if messages %}
-        <div class="container mt-3">
-            {% for message in messages %}
-            {% if message.tags == 'warning' %}
-            <div class="alert alert-warning mt-3" role="alert">
-                <p>Your post is under analysis by the administrator.</p>
-            </div>
-            <div class="alert alert-danger mt-3 create-messages" role="alert">
-                <p>There was an error with your post. Please try again.</p>
-            </div>
-            {% elif message.tags == 'error' %}
-            <div class="alert alert-warning mt-3 create-messages" role="alert">
-                <p>Your post is under analysis by the administrator.</p>
-            </div>
-            <div class="alert alert-danger mt-3" role="alert">
-                <p>There was an error with your post. Please try again.</p>
-            </div>
-            {% endif %}
-            {% endfor %}
-        </div>
-        {% endif %}
-
         <!-- Form for creating a post -->
         <form method="post" class="w-100" enctype="multipart/form-data">
             {% csrf_token %}

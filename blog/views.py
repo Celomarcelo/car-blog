@@ -63,8 +63,8 @@ def new_post(request):
             post.author = request.user
             post.save()
             messages.success(
-                request, 'Your post is under analysis by the administrator.')
-            return redirect('new_post')
+                request, 'Post created successfully.\nYour post is under analysis by the administrator.')
+            return redirect('home')
         else:
             messages.error(
                 request, 'There was an error with your post. Please try again.')

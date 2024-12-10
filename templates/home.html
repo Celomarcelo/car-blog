@@ -15,6 +15,20 @@
     <!-- Main content area -->
     <div class="col-md-8">
         <h2>Latest Posts</h2>
+        {% if messages %}
+        <div class="container mt-3">
+            {% for message in messages %}
+            <div class="alert 
+            {% if message.tags == 'success' %}alert-success
+            {% elif message.tags == 'warning' %}alert-warning
+            {% elif message.tags == 'error' %}alert-danger
+            {% endif %}
+            alert-dismissible fade show text-center" role="alert">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
         {% for post in posts %}
         {% if post.approved %}
         <div class="card mb-3">
@@ -31,7 +45,8 @@
                 {% else %}
                 <p class="card-text">{{ post.content|truncatewords:10 }}...</p>
                 <p class="card-text"><small class="text-muted">By {{ post.author.username }}</small></p>
-                <a href="{% url 'login' %}?next={% url 'post_detail' slug=post.slug %}" class="btn btn-primary">Read More</a>
+                <a href="{% url 'login' %}?next={% url 'post_detail' slug=post.slug %}" class="btn btn-primary">Read
+                    More</a>
                 {% endif %}
 
             </div>
