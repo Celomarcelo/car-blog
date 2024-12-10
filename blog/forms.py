@@ -39,7 +39,7 @@ class PostForm(forms.ModelForm):
         super(PostForm, self).__init__(*args, **kwargs)
         self.fields['title'].required = True
         self.fields['content'].required = True
-        self.fields['image'].required = False
+        self.fields['image'].required = True
         self.fields['category'].required = True
         
     def clean_title(self):
