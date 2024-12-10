@@ -44,7 +44,7 @@ class Post(models.Model):
     approved = models.BooleanField(default=False)
     category = models.ForeignKey(
         Category, on_delete=models.CASCADE, related_name='posts', null=True, blank=True)
-    image = models.ImageField(upload_to='post_images/', blank=True, null=True, default= 'post_images/no-image-default_i5fu5p.jpg')
+    image = models.ImageField(upload_to='post_images/', blank=True, null=True)
     slug = models.SlugField(unique=True, max_length=200, blank=True)
 
     def save(self, *args, **kwargs):
