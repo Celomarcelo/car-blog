@@ -62,7 +62,7 @@ def new_post(request):
             post = form.save(commit=False)
             post.author = request.user
             post.save()
-            messages.warning(
+            messages.success(
                 request, 'Your post is under analysis by the administrator.')
             return redirect('home')
         else:
