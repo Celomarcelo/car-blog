@@ -64,7 +64,7 @@ def new_post(request):
             post.save()
             messages.success(
                 request, 'Your post is under analysis by the administrator.')
-            return
+            return redirect('new_post')
         else:
             messages.error(
                 request, 'There was an error with your post. Please try again.')
