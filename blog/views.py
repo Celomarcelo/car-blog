@@ -261,10 +261,9 @@ def profile(request):
     Returns:
     - HTTPResponse: Redirects to profile page after updating profile or changing password, or renders the profile form.
     """
-    
+
     profile_form = ProfileUpdateForm(instance=request.user)
     password_form = PasswordChangeForm(request.user)
-
 
     if request.method == 'POST':
         if 'update_profile' in request.POST:
@@ -292,9 +291,8 @@ def profile(request):
     return render(request, 'profile.html', context)
 
 
+@login_required
 @require_POST
 def custom_logout(request):
-    if request.method == 'POST':
-        logout(request)
-        return redirect('logged_out')
-    return redirect('/')
+    logout(request)
+    return redirect('logged_out')
