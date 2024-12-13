@@ -179,3 +179,6 @@ MESSAGE_TAGS = {
     message_constants.WARNING: 'warning',
     message_constants.ERROR: 'danger',
 }
+
+SESSION_COOKIE_AGE = 60
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
