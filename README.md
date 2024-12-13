@@ -1,8 +1,48 @@
 # Carblog
 
-Carblog is a website dedicated to automotive enthusiasts who want to stay informed about the latest industry news, review new car models, and share their own experiences and tips about vehicles. The site is designed to provide an interactive and informative experience for all car lovers.
-
 ![Responsive Mockup](static/images/smartmockups_lzcvb6po.jpg)
+
+Carblog is a website designed for automotive enthusiasts who want to stay updated on the latest industry news, explore reviews of new car models, and share their own experiences and tips about vehicles. More than just a blog, Carblog addresses the need for centralized, relevant information for car lovers, offering an interactive and informative experience all in one place.
+Carblog is ideal for those who:
+
+   - Want to save time by finding all the latest automotive news and reviews in one space.
+   - Are looking for a platform to share their opinions and tips with other enthusiasts.
+   - Enjoy connecting with a community that shares the same passion for cars.
+   - Need a tool to compare car models and make more informed purchasing decisions.
+   - Seek inspiration for customizations or car maintenance through real stories and experiences from other users.
+
+ ## Problems Solved by Carblog
+  1. Information Fragmentation: Instead of searching for news, reviews, and personal experiences across multiple sources, users can find everything on Carblog.
+  2. Difficulty in Making Purchase Decisions: With detailed reviews and the upcoming car comparison feature, Carblog helps users choose the ideal model based on their needs.
+  3. Lack of an Interactive Community: Carblog encourages the exchange of ideas and experiences through posts, comments, and discussions.
+
+
+### Wireframe Description
+
+The wireframe below outlines the structure of the Carblog website, designed to provide a clear and intuitive user experience. Each section is strategically positioned to enhance navigation, content discovery, and user interaction.
+
+1. **Header**:
+   - The header contains three key areas:
+     - **Brand (Logo)**: Positioned on the left to ensure instant recognition.
+     - **Site Navigation Options**: Located centrally, providing links to main sections of the website.
+     - **User Navigation Options**: Found on the right, offering access to user-specific features such as login, profile, or account settings.
+
+2. **Page Introduction**:
+   - Below the header, there's a dedicated space for the **Brand and Description of the Page**, which provides context about the website and its purpose.
+
+3. **Main Content Area**:
+   - This is the central focus of the page, divided into three parts:
+     - **Image (img)**: A placeholder for visuals related to the post or topic being displayed.
+     - **User-Supplied Content**: A section for displaying written or uploaded content provided by users.
+     - **Details Button**: A call-to-action button for users to view more details about the post or content.
+
+4. **Sidebar**:
+   - Positioned on the right side, the sidebar contains links to **Categories**:
+     - These links allow users to filter content based on their preferences, such as specific types of vehicles or topics of interest.
+
+This wireframe ensures a clean and functional layout, optimized for readability, ease of navigation, and user engagement. It serves as a guide for developing the Carblog's visual and interactive structure.
+
+![Wireframe](static/images/BLOG%20PROJECT.png)
 
 ## Features
 
@@ -95,6 +135,61 @@ Carblog is a website dedicated to automotive enthusiasts who want to stay inform
 | **Form Field Styling**      | Form fields are styled correctly           | pass         |
 | **Error Handling**          | Handles errors (e.g., form submission errors) gracefully | pass  |
 
+
+## Automated Tests
+
+This project includes automated tests for the main application models (`Category`, `Post`, and `Comment`). The tests are implemented using Django's built-in testing framework (`django.test`). Below is a detailed description of the tests:
+
+---
+
+### Test Structure
+
+The tests are organized into three classes, each representing a specific model:
+
+1. **CategoryModelTest**
+2. **PostModelTest**
+3. **CommentModelTest**
+
+Each class uses the `setUp` method to create the necessary data for the tests, ensuring that each test is executed independently with a consistent data set.
+
+---
+
+## Included Tests
+
+### 1. CategoryModelTest
+- **Description**: Tests the `Category` model.
+- **Tested Methods**:
+  - `__str__`: Verifies that the string representation of a category is the name assigned to it.
+- **Example**:
+  - A category named "Technology" is created, and we verify that `str(category)` returns "Technology".
+
+### 2. PostModelTest
+- **Description**: Tests the `Post` model.
+- **Tested Methods**:
+  - Post creation and attribute verification (`title`, `content`, `author`, `category`).
+  - The `approved` field, which should be `False` by default.
+  - `__str__`: Verifies that the string representation of a post is its title.
+- **Example**:
+  - A post with the title "Django Testing" is created, and we verify the attributes and the output of `str(post)`.
+
+### 3. CommentModelTest
+- **Description**: Tests the `Comment` model.
+- **Tested Methods**:
+  - Comment creation and attribute verification (`post`, `author`, `content`).
+  - The `approved` field, which should be `False` by default.
+  - `__str__`: Verifies that the string representation of a comment follows the expected format (`"Comment by <author> on <post>"`).
+- **Example**:
+  - A comment is created on a post, and we verify the attributes and the output of `str(comment)`.
+
+---
+
+## How to Run the Tests
+
+To run the tests, use the following command in the terminal:
+
+```bash
+python manage.py test
+```
 ### Lighthouse Tests
 
 - Lighthouse tests were conducted on all pages to ensure performance.

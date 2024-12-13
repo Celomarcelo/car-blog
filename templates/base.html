@@ -12,14 +12,18 @@
     <link rel="icon" type="image/x-icon" href="{% static 'favicon/favicon.ico' %}">
     <script>
         function autoDismissAlert(alertId, timeout) {
-            setTimeout(function() {
+            setTimeout(function () {
                 var alert = document.getElementById(alertId);
                 if (alert) {
                     alert.classList.remove('show');
                     alert.classList.add('fade');
-                    setTimeout(function() { alert.remove(); }, 500);
+                    setTimeout(function () { alert.remove(); }, 500);
                 }
             }, timeout);
+        }
+        function confirmLogout(event) {
+            const confirmation = confirm("Are you sure you want to log out?");
+            return confirmation;
         }
     </script>
 </head>
@@ -51,17 +55,21 @@
                     </li>
                     {% if user.is_superuser %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'admin:index' %}" target="_blank" rel="noopener noreferrer">Admin</a>
+                        <a class="nav-link" href="{% url 'admin:index' %}" target="_blank"
+                            rel="noopener noreferrer">Admin</a>
                     </li>
                     {% endif %}
                     <li class="nav-item d-flex align-items-center mr-3">
                         <a class="nav-link" href="{% url 'user_posts' user.username %}">My Posts</a>
                     </li>
                     <li class="nav-item d-flex align-items-center">
-                        <form method="POST" action="{% url 'logout' %}" class="form-inline mb-0">
+                        <form method="POST" action="{% url 'logout' %}" class="form-inline mb-0"
+                            onsubmit="return confirmLogout(event);">
                             {% csrf_token %}
                             <button type="submit" class="btn btn-link nav-link"
-                                style="padding: 0; border: none; background: none;">Logout</button>
+                                style="padding: 0; border: none; background: none;">
+                                Logout
+                            </button>
                         </form>
                     </li>
                     {% else %}
@@ -91,7 +99,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    
+
 </body>
 
 </html>
