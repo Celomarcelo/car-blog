@@ -9,7 +9,7 @@ from django.contrib import messages
 from django.views.decorators.http import require_POST
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth import get_user_model
-from validators import safe_slug
+from .validators import safe_slug
 
 
 def home(request):
