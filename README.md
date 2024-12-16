@@ -142,7 +142,7 @@ The Carblog application uses a relational database to store and manage data. The
   
 - **Authorization**:
   - Only authenticated users can create, edit, or delete their posts.
-  - Users cannot edit or delete posts or comments created by others. Unauthorized attempts redirect users to a "403 Forbidden" page.
+  - Users cannot edit or delete posts or comments created by others.
   - Only admins or moderators can approve or reject posts and comments.
 
 ---
@@ -159,6 +159,9 @@ The Carblog application uses a relational database to store and manage data. The
 - CSS
   - No errors were found when passing through the [Jigsaw validator](https://jigsaw.w3.org)
     ![cssvalidator](static/images/css%20valid.png)
+
+- JavaScript
+    ![Js Hint](static/images/jshint.jpeg)
 
 ### Check List
 
