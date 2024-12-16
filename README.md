@@ -85,6 +85,68 @@ This wireframe ensures a clean and functional layout, optimized for readability,
 - User feedback survey form
 - Car comparison section
 
+## Data Structure
+
+The Carblog application uses a relational database to store and manage data. The database schema is designed to handle user accounts, blog posts, categories, and comments efficiently, ensuring scalability and data integrity.
+
+### Database Models
+
+1. **Category**
+   - Represents categories to organize posts.
+   - **Fields**:
+     - `id` (Primary Key): Auto-incremented identifier for each category.
+     - `name`: The name of the category (e.g., "Sports Cars", "SUVs").
+   - **Methods**:
+     - `__str__`: Returns the name of the category as its string representation.
+
+2. **Post**
+   - Represents individual blog posts created by users.
+   - **Fields**:
+     - `id` (Primary Key): Auto-incremented identifier for each post.
+     - `title`: The title of the post.
+     - `content`: The content of the post.
+     - `author` (Foreign Key): Links the post to its creator (User model). If a user is deleted, their posts are also deleted.
+     - `created_at`: The date and time the post was created (automatically set when the post is created).
+     - `updated_at`: The date and time the post was last updated (automatically updated whenever the post is saved).
+     - `approved`: A boolean indicating whether the post has been approved for publication.
+     - `category` (Foreign Key): Links the post to a specific category. This field is optional.
+     - `image`: An optional image associated with the post, stored in the `post_images/` directory.
+     - `slug`: A unique slug for the post, generated from the title. If a slug already exists, a counter is appended to ensure uniqueness.
+   - **Methods**:
+     - `save`: Overrides the default save method to automatically generate a unique slug based on the title.
+
+3. **Comment**
+   - Represents comments made on blog posts.
+   - **Fields**:
+     - `id` (Primary Key): Auto-incremented identifier for each comment.
+     - `post` (Foreign Key): Links the comment to a specific post. If the post is deleted, the associated comments are also deleted.
+     - `author` (Foreign Key): Links the comment to its creator (User model). If a user is deleted, their comments are also deleted.
+     - `content`: The content of the comment.
+     - `created_at`: The date and time the comment was created (automatically set when the comment is created).
+     - `approved`: A boolean indicating whether the comment has been approved for publication.
+   - **Methods**:
+     - `__str__`: Returns a string indicating the author and the post the comment is associated with.
+
+### Relationships
+
+- **User and Post**: One-to-Many relationship. A user can create multiple posts, but each post belongs to a single user.
+- **Post and Category**: Many-to-One relationship. A post can belong to one category, but a category can have multiple posts.
+- **Post and Comment**: One-to-Many relationship. A post can have multiple comments, but each comment belongs to one post.
+- **User and Comment**: One-to-Many relationship. A user can write multiple comments, but each comment is linked to a single user.
+
+### Security and Authorization
+
+- **User Data Security**:
+  - Passwords are encrypted using Django's default hashing mechanisms.
+  - Sensitive data is protected by environment variables and not hard-coded in the application.
+  
+- **Authorization**:
+  - Only authenticated users can create, edit, or delete their posts.
+  - Users cannot edit or delete posts or comments created by others. Unauthorized attempts redirect users to a "403 Forbidden" page.
+  - Only admins or moderators can approve or reject posts and comments.
+
+---
+
 ## Testing
 
 ### Validator Testing
@@ -196,30 +258,69 @@ python manage.py test
 
     ![Home](static/images/lighthouse.png)
   
-### Unresolved errors
-
-- An Html validator error was not resolved, attempts were made to adapt the "POST" method to the request, without success.
-\
-    ![Error](static/images/Captura%20de%20Tela%202024-08-05%20às%2011.23.12.png)
 
 ## Deployment
 
-- The site was deployed to Heroku. The steps to deploy are as follows:
-  - Copy the code to your Github or local repository.
-  - Install Heroku CLI.
-  - Create a new app on the Heroku platform, select the region according to your region.
-  - Add add-ons for database and cloud service, recommended Heroku Postgres, Cloudinary.
-  - For the password recovery feature to work, you will need an email provider, in this case Gmail was used.
-  - Configure the following environment variables:
-      * ALLOWED_HOSTS= yourdomain.herokuapp.com.
-      * CLOUDINARY_URL= your cloud address.
-      * DATABASE_URL= your database url.
-      * EMAIL_HOST_USER= the email that you want to use for reset password.
-      * EMAIL_HOST_PASSWORD= your APP password.
-      * SECRET_KEY= Django secretkey
-  - Access your application's terminal on Heroku and perform database migrations.
-  - Run Heroku deploy. After this step, the website should now be visible.
-  - Create a superuser to have access to the site administrator and interact with the site's content.
+The deployment process ensures that the Car Blog application is live and accessible to users. Below is a step-by-step guide with detailed explanations for deploying the application using Heroku:
+
+1. **Clone the Repository**  
+   Clone the project repositories to your local environment or GitHub account.
+
+2. **Install Heroku CLI**  
+   Download and install the Heroku CLI.
+   After installation, log in using:
+
+   ```bash
+    heroku login
+    ```
+   on your terminal.
+
+   This opens a browser window for authentication.
+
+3. **Create a Heroku App**  
+   On your Heroku dashboard, click the `New` button in the right corner and then `Create new app`.
+   On the next page, add a name for your app and select the region you want.
+   On the next page, navigate to the `Deploy` section and in the `Deployment method` option select `Github`, connect to your Github repository.
+
+4. **Add Necessary Add-ons**  
+    In the `Resources` tab on your Heroku app's dashboard, add the following `add ons` to the search field:
+
+    - Heroku Postgres for the database.
+    - Cloudinary for image storage.
+
+5. **Configure Environment Variables**  
+
+    In the Heroku dasbord, go to the `settings` tab and in the `Config Var` section add the following variable:
+
+    - `ALLOWED_HOSTS`: Your app's domain.
+    - `DATABASE_URL`: URL for the Postgres database.
+    - `CLOUDINARY_URL`: Your Cloudinary API key.
+    - `DEBUG` : value of False.
+    - `SECRET_KEY`: Django secret key.
+    - `EMAIL_HOST_USER`: the email that you want to use for reset password..
+    - `EMAIL_HOST_PASSWORD`: your APP password.
+
+6. **Perform Database Migrations**  
+    On your environment access the Heroku terminal:
+
+    ```bash
+    heroku run bash -a your app name
+    ```
+    Replace "your app name" with the name of your app
+
+    Run 
+    ```bash
+    python manage.py migrate
+    ```
+    in the Heroku terminal.
+
+7. **Deploy the Application**  
+   After this process, in the `Deploy` tab in the `Manual deploy` section, click on the `Deploy Branch` button to start the app.
+
+8. **Access the Live Application**  
+   The site will be live at the Heroku app URL.
+
+---
 
 The live link can be found here - [https://carblog-6763fde39b1c.herokuapp.com](https://carblog-6763fde39b1c.herokuapp.com)
 
