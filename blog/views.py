@@ -9,6 +9,7 @@ from django.contrib import messages
 from django.views.decorators.http import require_POST
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth import get_user_model
+from validators import safe_slug
 
 
 def home(request):
@@ -103,6 +104,8 @@ def post_detail(request, slug):
     Returns:
     - HTTPResponse: Renders the post detail page with comments and comment form.
     """
+    
+    safe_slug(slug)
     post = get_object_or_404(Post, slug=slug)
     comments = post.comments.filter(approved=True)
 
@@ -163,7 +166,8 @@ def post_edit(request, slug):
     Returns:
     - HTTPResponse: Redirects to post detail page after editing or renders the edit post form.
     """
-
+    
+    safe_slug(slug)
     post = get_object_or_404(Post, slug=slug)
 
     if post.author != request.user:
@@ -198,6 +202,7 @@ def post_delete(request, slug):
     Returns:
     - HTTPResponse: Redirects to the user's posts page after deletion or renders the delete confirmation page.
     """
+    safe_slug(slug)
     post = get_object_or_404(Post, slug=slug)
 
     if post.author != request.user:
