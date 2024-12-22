@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.text import slugify
+import uuid
 
 
 class Category(models.Model):
@@ -49,7 +50,8 @@ class Post(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            base_slug = slugify(self.title)
+            unique_id = str(uuid.uuid4())[:8]
+            base_slug = f'{slugify(self.title)}-{unique_id}'
             slug = base_slug
             counter = 1
             while Post.objects.filter(slug=slug).exists():
